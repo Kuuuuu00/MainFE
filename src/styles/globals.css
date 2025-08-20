@@ -14,14 +14,10 @@ body {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-    /* 모바일 주소창 대응 */
-  height: var(--app-height);
 }
 
 :root {
   font-family: "Pretendard", ui-sans-serif, system-ui, sans-serif;
-  /* 모바일 화면 높이 변수 */
-  --app-height: 100vh;
 }
 
 @layer utilities {

@@ -8,9 +8,9 @@ interface LayoutProps {
 
 const Layout = ({ children }: LayoutProps) => {
   return (
-    <div className="flex h-screen w-full items-center justify-center bg-gray-200">
-      <div className="relative flex h-[var(--app-height)] w-full max-w-sm flex-col overflow-hidden bg-white shadow-lg sm:h-[852px]">
-        <main className="flex-grow overflow-y-auto">
+    <div className="flex h-dvh w-dvw justify-center bg-gray-100">
+      <div className="flex h-full w-full max-w-[430px] flex-col bg-white sm:h-[852px]">
+        <main className="h-full w-full">
           <Outlet />
         </main>
         {children}
