@@ -30,12 +30,12 @@ const navItems = [
 
 const Navbar = () => {
   return (
-    <nav className="flex h-24 px-4 w-full items-center justify-around border-t border-gray-200 bg-white pb-safe gap-[13px]">
+    <nav className="flex h-24 px-4 pt-2 w-full justify-center border-t border-gray-200 bg-white pb-safe gap-[13px] flex-shrink-0">
       {navItems.map(({ path, icon: Icon, activeIcon: ActiveIcon, label }) => (
         <NavLink
           key={path}
           to={path}
-          className="flex flex-1 flex-col items-center justify-center"
+          className="flex flex-1 flex-col items-center justify-start"
         >
           {({ isActive }) => (
             <div className="flex flex-col items-center gap-1">
