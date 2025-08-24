@@ -54,6 +54,7 @@ const RAW_RUNTIME_STATE =
           ["postcss", "npm:8.5.6"],\
           ["prettier", "npm:3.6.2"],\
           ["react", "npm:19.1.0"],\
+          ["react-calendar", "virtual:a26df681d8f5cb886104bc63845e90f74ff917ae53e0ae4622b7df50bf61ef86383bf875b5dd214089733dd74f1e7aa37ddc1b4f7c3a8adab11cd2d56ad5a4b3#npm:6.0.0"],\
           ["react-dom", "virtual:a26df681d8f5cb886104bc63845e90f74ff917ae53e0ae4622b7df50bf61ef86383bf875b5dd214089733dd74f1e7aa37ddc1b4f7c3a8adab11cd2d56ad5a4b3#npm:19.1.0"],\
           ["react-router-dom", "virtual:a26df681d8f5cb886104bc63845e90f74ff917ae53e0ae4622b7df50bf61ef86383bf875b5dd214089733dd74f1e7aa37ddc1b4f7c3a8adab11cd2d56ad5a4b3#npm:7.6.3"],\
           ["tailwindcss", "npm:4.1.11"],\
@@ -2011,6 +2012,15 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["@wojtekmaj/date-utils", [\
+      ["npm:2.0.2", {\
+        "packageLocation": "./.yarn/cache/@wojtekmaj-date-utils-npm-2.0.2-2752e61a07-6a55542cf1.zip/node_modules/@wojtekmaj/date-utils/",\
+        "packageDependencies": [\
+          ["@wojtekmaj/date-utils", "npm:2.0.2"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["abbrev", [\
       ["npm:3.0.1", {\
         "packageLocation": "./.yarn/cache/abbrev-npm-3.0.1-a34d600e50-21ba8f574e.zip/node_modules/abbrev/",\
@@ -3283,6 +3293,16 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["get-user-locale", [\
+      ["npm:3.0.0", {\
+        "packageLocation": "./.yarn/cache/get-user-locale-npm-3.0.0-2a454a29cc-71d352b4d1.zip/node_modules/get-user-locale/",\
+        "packageDependencies": [\
+          ["get-user-locale", "npm:3.0.0"],\
+          ["memoize", "npm:10.1.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["glob", [\
       ["npm:10.4.5", {\
         "packageLocation": "./.yarn/cache/glob-npm-10.4.5-8c63175f05-19a9759ea7.zip/node_modules/glob/",\
@@ -3389,6 +3409,7 @@ const RAW_RUNTIME_STATE =
           ["postcss", "npm:8.5.6"],\
           ["prettier", "npm:3.6.2"],\
           ["react", "npm:19.1.0"],\
+          ["react-calendar", "virtual:a26df681d8f5cb886104bc63845e90f74ff917ae53e0ae4622b7df50bf61ef86383bf875b5dd214089733dd74f1e7aa37ddc1b4f7c3a8adab11cd2d56ad5a4b3#npm:6.0.0"],\
           ["react-dom", "virtual:a26df681d8f5cb886104bc63845e90f74ff917ae53e0ae4622b7df50bf61ef86383bf875b5dd214089733dd74f1e7aa37ddc1b4f7c3a8adab11cd2d56ad5a4b3#npm:19.1.0"],\
           ["react-router-dom", "virtual:a26df681d8f5cb886104bc63845e90f74ff917ae53e0ae4622b7df50bf61ef86383bf875b5dd214089733dd74f1e7aa37ddc1b4f7c3a8adab11cd2d56ad5a4b3#npm:7.6.3"],\
           ["tailwindcss", "npm:4.1.11"],\
@@ -3931,6 +3952,16 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["loose-envify", [\
+      ["npm:1.4.0", {\
+        "packageLocation": "./.yarn/cache/loose-envify-npm-1.4.0-6307b72ccf-655d110220.zip/node_modules/loose-envify/",\
+        "packageDependencies": [\
+          ["js-tokens", "npm:4.0.0"],\
+          ["loose-envify", "npm:1.4.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["lower-case", [\
       ["npm:2.0.2", {\
         "packageLocation": "./.yarn/cache/lower-case-npm-2.0.2-151055f1c2-3d925e0903.zip/node_modules/lower-case/",\
@@ -3993,6 +4024,16 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./.yarn/cache/math-intrinsics-npm-1.1.0-9204d80e7d-7579ff94e8.zip/node_modules/math-intrinsics/",\
         "packageDependencies": [\
           ["math-intrinsics", "npm:1.1.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["memoize", [\
+      ["npm:10.1.0", {\
+        "packageLocation": "./.yarn/cache/memoize-npm-10.1.0-0d27dbdaee-6cf71f673b.zip/node_modules/memoize/",\
+        "packageDependencies": [\
+          ["memoize", "npm:10.1.0"],\
+          ["mimic-function", "npm:5.0.1"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -4514,6 +4555,36 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./.yarn/cache/react-npm-19.1.0-9804a7da5b-530fb9a622.zip/node_modules/react/",\
         "packageDependencies": [\
           ["react", "npm:19.1.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["react-calendar", [\
+      ["npm:6.0.0", {\
+        "packageLocation": "./.yarn/cache/react-calendar-npm-6.0.0-22d8fa8a46-4c79d7a7d7.zip/node_modules/react-calendar/",\
+        "packageDependencies": [\
+          ["react-calendar", "npm:6.0.0"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:a26df681d8f5cb886104bc63845e90f74ff917ae53e0ae4622b7df50bf61ef86383bf875b5dd214089733dd74f1e7aa37ddc1b4f7c3a8adab11cd2d56ad5a4b3#npm:6.0.0", {\
+        "packageLocation": "./.yarn/__virtual__/react-calendar-virtual-e68fd0d3b2/0/cache/react-calendar-npm-6.0.0-22d8fa8a46-4c79d7a7d7.zip/node_modules/react-calendar/",\
+        "packageDependencies": [\
+          ["@types/react", "npm:19.1.8"],\
+          ["@types/react-dom", "virtual:a26df681d8f5cb886104bc63845e90f74ff917ae53e0ae4622b7df50bf61ef86383bf875b5dd214089733dd74f1e7aa37ddc1b4f7c3a8adab11cd2d56ad5a4b3#npm:19.1.6"],\
+          ["@wojtekmaj/date-utils", "npm:2.0.2"],\
+          ["clsx", "npm:2.1.1"],\
+          ["get-user-locale", "npm:3.0.0"],\
+          ["react", "npm:19.1.0"],\
+          ["react-calendar", "virtual:a26df681d8f5cb886104bc63845e90f74ff917ae53e0ae4622b7df50bf61ef86383bf875b5dd214089733dd74f1e7aa37ddc1b4f7c3a8adab11cd2d56ad5a4b3#npm:6.0.0"],\
+          ["react-dom", "virtual:a26df681d8f5cb886104bc63845e90f74ff917ae53e0ae4622b7df50bf61ef86383bf875b5dd214089733dd74f1e7aa37ddc1b4f7c3a8adab11cd2d56ad5a4b3#npm:19.1.0"],\
+          ["warning", "npm:4.0.3"]\
+        ],\
+        "packagePeers": [\
+          "@types/react-dom",\
+          "@types/react",\
+          "react-dom",\
+          "react"\
         ],\
         "linkType": "HARD"\
       }]\
@@ -5236,6 +5307,16 @@ const RAW_RUNTIME_STATE =
         "packagePeers": [\
           "@types/vite",\
           "vite"\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["warning", [\
+      ["npm:4.0.3", {\
+        "packageLocation": "./.yarn/cache/warning-npm-4.0.3-291e921d6d-aebab44512.zip/node_modules/warning/",\
+        "packageDependencies": [\
+          ["loose-envify", "npm:1.4.0"],\
+          ["warning", "npm:4.0.3"]\
         ],\
         "linkType": "HARD"\
       }]\
