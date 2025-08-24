@@ -1,6 +1,6 @@
 import UnLockIcon from "@/assets/icons/unlocked.svg?react";
 
-const Lock = () => {
+const Lock = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="flex flex-col w-full h-full items-center justify-center gap-2 bg-white/66 backdrop-blur-sm">
       <UnLockIcon className="w-8 h-8" />
@@ -9,6 +9,7 @@ const Lock = () => {
         아래 버튼을 눌러 씨앗을 배송받고, <br />
         새로운 곳에서 식물을 키워보세요.
       </div>
+      {children}
     </div>
   );
 };

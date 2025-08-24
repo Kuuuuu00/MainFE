@@ -11,6 +11,7 @@ import ThirdPlant from "@/components/home/ThirdPlant";
 import FourthPlant from "@/components/home/FourthPlant";
 
 import "@/styles/home/swiper.css";
+import BottomSheet from "@/components/bottom-sheet/BottomSheet";
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -61,6 +62,7 @@ const HomePage = () => {
           <FourthPlant />
         </SwiperSlide>
       </Swiper>
+      <BottomSheet />
     </div>
   );
 };

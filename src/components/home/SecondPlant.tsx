@@ -23,19 +23,26 @@ const SecondPlant = () => {
       {isUnlocked !== "clear" && (
         <>
           <div className="flex-1 flex items-center justify-center w-full">
-            {isUnlocked === "unlock" ? <UnLock /> : <Lock />}
+            {isUnlocked === "unlock" ? (
+              <UnLock>
+                <button
+                  onClick={() => setIsUnlocked("clear")}
+                  className={`m-4 text-white bg-primary p-3 text-body2 rounded-lg`}
+                >
+                  씨앗 받고 해금하기!
+                </button>
+              </UnLock>
+            ) : (
+              <Lock>
+                <button
+                  onClick={() => setIsUnlocked("unlock")}
+                  className={`m-4 text-white bg-gray-400 p-3 text-body2 rounded-lg`}
+                >
+                  충분하지 않아요
+                </button>
+              </Lock>
+            )}
           </div>
-
-          <button
-            onClick={() =>
-              setIsUnlocked(isUnlocked === "lock" ? "unlock" : "clear")
-            }
-            className={`w-full ${isUnlocked === "unlock" ? "bg-primary text-white" : "bg-gray-200 text-gray-400"} h-16 text-heading2`}
-          >
-            {isUnlocked === "lock"
-              ? "아직 감자가 충분히 모이지 않았어요"
-              : "씨앗 받고 해금하기!"}
-          </button>
         </>
       )}
       {isUnlocked === "clear" && (
@@ -48,7 +55,6 @@ const SecondPlant = () => {
             </header>
             <Avatar />
           </div>
-          <BottomSheet />
         </>
       )}
     </div>

@@ -174,19 +174,19 @@ const BottomSheet: React.FC = () => {
   };
   return (
     <div
-      className="fixed inset-0 z-50 overflow-hidden w-full pointer-events-none"
+      className="absolute inset-0 z-50 overflow-hidden w-full pointer-events-none"
       style={{ touchAction: "none" }}
     >
       {/* ✅ 풀 오픈일 때만 백드롭 렌더 */}
       {snapIdx > 0 && (
         <button
-          className="fixed inset-0 pointer-events-auto"
+          className="absolute inset-0 pointer-events-auto"
           onClick={() => snapTo(0)}
         />
       )}
 
       {/* 패널 */}
-      <div className="fixed inset-x-0 bottom-0 flex justify-center z-10 ">
+      <div className="absolute inset-x-0 bottom-0 flex justify-center z-10 ">
         <div
           ref={sheetRef}
           className="pointer-events-auto w-full rounded-t-2xl border-t border-gray-200 bg-white p-2"
