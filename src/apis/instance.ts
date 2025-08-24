@@ -17,7 +17,7 @@ api.interceptors.request.use(config => {
     config.headers.Authorization = `Bearer ${accessToken}`;
   } else {
     // 남아있을 수도 있는 Authorization 정리
-    delete (config.headers as any).Authorization;
+    delete (config.headers as Record<string, string>).Authorization;
   }
   return config;
 });
