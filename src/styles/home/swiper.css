@@ -1,0 +1,18 @@
+/* 페이지네이션 완전히 숨기기 */
+.swiper-pagination {
+  bottom: 150px !important;
+  z-index: 10 !important;
+}
+
+.swiper-pagination-bullet {
+  background: var(--color-white) !important;
+  opacity: 0.4 !important;
+  z-index: 1 !important;
+}
+
+.swiper-pagination-bullet-active {
+  opacity: 1 !important;
+  width: 10px !important;
+  height: 10px !important;
+  z-index: 1 !important;
+}

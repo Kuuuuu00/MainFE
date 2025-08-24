@@ -28,6 +28,17 @@ body {
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
+
+
+  .button-primary {
+    @apply w-96 py-3 bg-primary text-heading2 text-white cursor-pointer disabled:text-gray-400 disabled:cursor-not-allowed rounded-lg disabled:bg-gray-200;
+  }
+
+  .button-secondary {
+    @apply w-80 py-3 bg-white text-heading2 text-primary-font border border-primary-font cursor-pointer disabled:text-gray-400 disabled:cursor-not-allowed rounded-lg disabled:bg-gray-200;
+  }
+
+
   /* 모바일에서 텍스트 선택 허용 (필요한 경우) */
   .select-text {
     -webkit-user-select: text;

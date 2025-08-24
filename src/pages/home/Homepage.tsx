@@ -1,36 +1,66 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination } from "swiper/modules";
 
-import BottomSheet from "@/components/bottom-sheet/BottomSheet";
-import Lock from "@/components/lock/Lock";
-import UnLock from "@/components/lock/UnLock";
+import LoadingDots from "@/components/loading/loading";
 
-type BottomSheetType = "lock" | "unlock" | "clear";
+import FirstPlant from "@/components/home/FirstPlant";
+import SecondPlant from "@/components/home/SecondPlant";
+import ThirdPlant from "@/components/home/ThirdPlant";
+import FourthPlant from "@/components/home/FourthPlant";
+
+import "@/styles/home/swiper.css";
 
 const HomePage = () => {
-  const [isUnlocked, setIsUnlocked] = useState<BottomSheetType>("lock");
-  return (
-    <div className="relative flex w-full items-center justify-center h-full ">
-      <div className="flex flex-col h-full items-center justify-between w-full">
-        {isUnlocked !== "clear" && (
-          <>
-            <div className="flex-1 flex items-center justify-center">
-              {isUnlocked === "unlock" ? <UnLock /> : <Lock />}
-            </div>
+  const navigate = useNavigate();
+  const [isOnboarding, setIsOnboarding] = useState(true);
+  const [isLoading, setIsLoading] = useState(true); // 스플래시 표시용
 
-            <button
-              onClick={() =>
-                setIsUnlocked(isUnlocked === "lock" ? "unlock" : "clear")
-              }
-              className={`w-full ${isUnlocked === "unlock" ? "bg-primary text-white" : "bg-gray-200 text-gray-400"} h-16 text-heading2`}
-            >
-              {isUnlocked === "lock"
-                ? "아직 감자가 충분히 모이지 않았어요"
-                : "씨앗 받고 해금하기!"}
-            </button>
-          </>
-        )}
-        {isUnlocked === "clear" && <BottomSheet />}
-      </div>
+  useEffect(() => {
+    const token = localStorage.getItem("NapulNapul-accessToken");
+
+    const timer = setTimeout(() => {
+      if (token) {
+        // 온보딩으로 보낼 때는 스플래시 유지 (isLoading을 false로 하지 않음)
+        navigate("/onboarding", { replace: true });
+        return; // 아래 코드 실행 안 함
+      }
+
+      // 토큰이 있을 때만 홈 화면을 보여주면서 스플래시 종료
+      setIsOnboarding(false);
+      setIsLoading(false);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, [navigate]);
+
+  if (isLoading) return <LoadingDots />;
+  // 온보딩 분기면 어차피 navigate 중이므로 아무것도 렌더하지 않기
+  if (isOnboarding) return null;
+
+  return (
+    <div className="relative flex flex-col h-full items-center justify-between w-full bg-transparent">
+      <Swiper
+        modules={[Pagination]} // Pagination 모듈 추가
+        slidesPerView={1} // 한 번에 보이는 슬라이드 개수
+        pagination={{ clickable: false }} // 동그라미 활성화 + 클릭 이동 가능
+        loop={true} // 마지막 슬라이드에서 종료되는 것 방지
+        className="home-swiper w-full flex-1 relative" // 아래 여백을 조금 주기 (점 안 잘리게)
+      >
+        <SwiperSlide>
+          <FirstPlant />
+        </SwiperSlide>
+        <SwiperSlide>
+          <SecondPlant />
+        </SwiperSlide>
+        <SwiperSlide>
+          <ThirdPlant />
+        </SwiperSlide>
+        <SwiperSlide>
+          <FourthPlant />
+        </SwiperSlide>
+      </Swiper>
     </div>
   );
 };

@@ -1,32 +1,34 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 
 import Plant from "@/assets/icons/bottom-sheet/plant.svg?react";
-import Potato from "@/assets/icons/bottom-sheet/potato.svg?react";
 import Check from "@/assets/icons/common/check.svg?react";
 import UnCheck from "@/assets/icons/common/uncheck.svg?react";
+
+import One from "@/assets/images/bottom-sheet/one.svg?react";
+import Two from "@/assets/images/bottom-sheet/two.svg?react";
+import Three from "@/assets/images/bottom-sheet/three.svg?react";
+import Four from "@/assets/images/bottom-sheet/four.svg?react";
+import ClearOne from "@/assets/images/bottom-sheet/clearOne.svg?react";
+import ClearTwo from "@/assets/images/bottom-sheet/clearTwo.svg?react";
+import ClearThree from "@/assets/images/bottom-sheet/clearThree.svg?react";
+import ClearFour from "@/assets/images/bottom-sheet/clearFour.svg?react";
 
 const BottomSheet: React.FC = () => {
   // ===== 표시용 상태 =====
   const [isChecked] = useState(true);
   const [isChecked2] = useState(false);
   const [isChecked3] = useState(false);
-  const [potatoCount] = useState(7);
+  const [level] = useState(2);
 
   // ===== 스냅/드래그 파라미터 =====
-  const snapPoints = [140, 560]; // 펼쳐진 "높이" 값 (peek, full)
-  const maxSnap = Math.max(...snapPoints);
-  const minTranslate = maxSnap - snapPoints[0]; // peek 위치의 translateY
 
   // 스냅 완료 상태를 보관(초기엔 닫힘 위치로 시작)
-  const [y, setY] = useState<number>(maxSnap);
 
   // ===== DOM/드래그 제어용 ref =====
-  const sheetRef = useRef<HTMLDivElement>(null);
   const rafId = useRef<number | null>(null);
   const dragging = useRef(false);
   const startY = useRef(0);
   const startTranslate = useRef(0);
-  const liveTranslate = useRef(0);
   const lastMoveT = useRef(0);
   const lastMoveY = useRef(0);
   const velocity = useRef(0);
@@ -34,6 +36,31 @@ const BottomSheet: React.FC = () => {
   // 드래그 끝단 저항감(러버밴드)
   const OVERDRAG = 40;
   const RESISTANCE = 0.35;
+
+  const snapPoints = [90, 560]; // [초기 90, 풀오픈 560]
+  const maxSnap = Math.max(...snapPoints);
+
+  // 2) 초기 높이를 '90px'로 고정
+  const INITIAL_HEIGHT = 90;
+  const INITIAL_TY = maxSnap - INITIAL_HEIGHT; // translateY = 560 - 90 = 470
+
+  // 3) 상태/레퍼런스 초기값을 초기 위치로 세팅
+  const [y, setY] = useState<number>(INITIAL_TY);
+  const sheetRef = useRef<HTMLDivElement>(null);
+  const liveTranslate = useRef<number>(INITIAL_TY);
+
+  const minTranslate = maxSnap - snapPoints[0]; // peek 위치의 translateY
+
+  const MAX_OPEN_HEIGHT = snapPoints[1]; // ← 원하는 최대 열림 높이
+  const TOP_TRANSLATE = Math.max(0, maxSnap - MAX_OPEN_HEIGHT);
+
+  // 4) 첫 페인트 전에 바로 위치 고정(애니메이션 없이)
+  useLayoutEffect(() => {
+    const el = sheetRef.current;
+    if (!el) return;
+    el.style.transition = "none";
+    el.style.transform = `translateY(${INITIAL_TY}px) translateZ(0)`;
+  }, [INITIAL_TY]);
 
   // ===== 유틸 =====
   const applyStyle = (ty: number, animate = false) => {
@@ -55,11 +82,15 @@ const BottomSheet: React.FC = () => {
     return raw;
   };
 
+  const [snapIdx, setSnapIdx] = useState(0); // 0=peek(90), 1=full(560)
+
+  // snapTo 수정
   const snapTo = (idx: number) => {
+    setSnapIdx(idx); // ← 현재 스냅 기록
     const h = snapPoints[idx];
-    const ty = maxSnap - h; // 목표 translateY
+    let ty = maxSnap - h;
+    ty = Math.max(ty, TOP_TRANSLATE); // ⬅️ 한계 보정
     applyStyle(ty, true);
-    // 애니 끝나면 상태 동기화
     setTimeout(() => setY(ty), 300);
     liveTranslate.current = ty;
   };
@@ -99,13 +130,15 @@ const BottomSheet: React.FC = () => {
     const rawNext = startTranslate.current + dy;
     const next = clampWithRubber(rawNext);
 
+    const capped = Math.max(next, TOP_TRANSLATE);
+
     // 속도(px/ms)
     const dt = Math.max(1, now - lastMoveT.current);
     velocity.current = (e.clientY - lastMoveY.current) / dt;
     lastMoveT.current = now;
     lastMoveY.current = e.clientY;
 
-    liveTranslate.current = next;
+    liveTranslate.current = capped;
 
     if (rafId.current == null) {
       rafId.current = requestAnimationFrame(() => {
@@ -139,23 +172,24 @@ const BottomSheet: React.FC = () => {
 
     snapTo(bestIdx);
   };
-
   return (
     <div
-      className="absolute inset-0 z-50 overflow-hidden"
+      className="fixed inset-0 z-50 overflow-hidden w-full pointer-events-none"
       style={{ touchAction: "none" }}
     >
-      {/* 백드롭: 클릭 시 peek으로 내려가기 (완전 닫힘 X) */}
-      <div
-        className="absolute inset-0 bg-transparent"
-        onClick={() => snapTo(0)}
-      />
+      {/* ✅ 풀 오픈일 때만 백드롭 렌더 */}
+      {snapIdx > 0 && (
+        <button
+          className="fixed inset-0 pointer-events-auto"
+          onClick={() => snapTo(0)}
+        />
+      )}
 
       {/* 패널 */}
-      <div className="absolute inset-x-0 bottom-0 flex justify-center">
+      <div className="fixed inset-x-0 bottom-0 flex justify-center z-10 ">
         <div
           ref={sheetRef}
-          className="pointer-events-auto w-full max-w-[393px] rounded-t-2xl border-t border-gray-200 bg-white p-2"
+          className="pointer-events-auto w-full rounded-t-2xl border-t border-gray-200 bg-white p-2"
           // 스냅 완료 상태 동기화 전용(드래그 중엔 applyStyle이 직접 반영)
           onPointerDown={onPointerDown}
           onPointerMove={onPointerMove}
@@ -215,25 +249,93 @@ const BottomSheet: React.FC = () => {
 
             <div className="my-10 w-full border-t border-gray-200" />
 
-            <div className="flex flex-col gap-4">
-              <div className="text-body-sb text-black">
-                <div className="text-heading2 flex items-center gap-1">
-                  <Plant className="h-8 w-8" />
-                  나의 감자
-                </div>
-                다음 텃밭을 열기까지{" "}
-                <span className="text-primary-font">감자 {potatoCount}개</span>
-                가 남았어요!
+            <div className="flex flex-col gap-1 text-body-sb text-black">
+              <div className="text-heading2 flex items-center gap-1 ">
+                <Plant className="h-8 w-8" />
+                소망 나무
               </div>
+              <p>
+                {level > 3 ? (
+                  <span>
+                    지금 바로{" "}
+                    <span className="text-primary-font">새로운 텃밭</span>을 열
+                    수 있어요!
+                  </span>
+                ) : (
+                  <span>
+                    다음 텃밭을 열기까지{" "}
+                    <span className="text-primary-font"> {4 - level}레벨</span>
+                    이 남았어요!
+                  </span>
+                )}
+              </p>
 
-              <div className="flex items-center gap-3">
-                {Array.from({ length: 10 }).map((_, index) => (
-                  <Potato
-                    key={index}
-                    className="h-6 w-6 transition-opacity"
-                    style={{ opacity: index < 10 - potatoCount ? 1 : 0.3 }}
-                  />
-                ))}
+              <div
+                className={`flex items-center justify-between text-body-sb text-gray-400`}
+              >
+                <div
+                  className={`flex items-center flex-col ${
+                    level > 0 && "text-gray-600"
+                  }`}
+                >
+                  {level > 0 ? (
+                    <ClearOne className="w-12 h-12" />
+                  ) : (
+                    <One className="w-12 h-12" />
+                  )}
+                  새싹
+                </div>
+                <div
+                  className={`w-6 h-0.5 rounded-full ${
+                    level > 1 && "bg-primary"
+                  } bg-gray-200 mb-4`}
+                />
+                <div
+                  className={`flex items-center flex-col ${
+                    level > 1 && "text-gray-600"
+                  }`}
+                >
+                  {level > 1 ? (
+                    <ClearTwo className="w-12 h-12" />
+                  ) : (
+                    <Two className="w-12 h-12" />
+                  )}
+                  꽃
+                </div>
+                <div
+                  className={`w-6 h-0.5 rounded-full ${
+                    level > 2 && "bg-primary"
+                  } bg-gray-200 mb-4`}
+                />
+                <div
+                  className={`flex items-center flex-col ${
+                    level > 2 && "text-gray-600"
+                  }`}
+                >
+                  {level > 2 ? (
+                    <ClearThree className="w-12 h-12 " />
+                  ) : (
+                    <Three className="w-12 h-12" />
+                  )}
+                  열매
+                </div>
+                <div
+                  className={`w-6 h-0.5 rounded-full ${
+                    level > 3 && "bg-primary"
+                  } bg-gray-200 mb-4`}
+                />
+                <div
+                  className={`flex items-center flex-col ${
+                    level > 3 && "text-gray-600"
+                  }`}
+                >
+                  {level > 3 ? (
+                    <ClearFour className="w-12 h-12" />
+                  ) : (
+                    <Four className="w-12 h-12" />
+                  )}
+                  나무
+                </div>
               </div>
             </div>
           </div>

@@ -1,0 +1,26 @@
+/* styles/home/swiper.css */
+.home-swiper .swiper-pagination {
+  bottom: 110px !important;
+  z-index: 10 !important;
+}
+.home-swiper .swiper-pagination-bullet {
+  background: var(--color-white) !important;
+  opacity: 0.4 !important;
+}
+.home-swiper .swiper-pagination-bullet-active {
+  opacity: 1 !important;
+  width: 10px !important;
+  height: 10px !important;
+}
+.onboarding-swiper .swiper-pagination {
+  bottom: 40px !important;
+  z-index: 10 !important;
+}
+/* styles/onboarding/swiper.css */
+.onboarding-swiper .swiper-pagination-bullet {
+  background-color: var(--color-gray-200) !important;
+  opacity: 1 !important;
+}
+.onboarding-swiper .swiper-pagination-bullet-active {
+  background-color: var(--color-gray-600) !important;
+}
