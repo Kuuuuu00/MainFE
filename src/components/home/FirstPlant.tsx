@@ -7,7 +7,6 @@ import Avatar from "@/components/home/Avatar";
 
 import Lock from "@/components/lock/Lock";
 import UnLock from "@/components/lock/UnLock";
-import BottomSheet from "@/components/bottom-sheet/BottomSheet";
 
 type BottomSheetType = "lock" | "unlock" | "clear";
 

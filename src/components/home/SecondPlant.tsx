@@ -4,7 +4,6 @@ import Background from "@/assets/images/background/background2.png";
 
 import Lock from "@/components/lock/Lock";
 import UnLock from "@/components/lock/UnLock";
-import BottomSheet from "@/components/bottom-sheet/BottomSheet";
 import Map from "@/components/common/Map";
 import Avatar from "@/components/home/Avatar";
 
