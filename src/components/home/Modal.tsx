@@ -1,13 +1,14 @@
-import { useEffect } from "react";
-import { createPortal } from "react-dom";
+import { useEffect, useState } from "react";
 import Character from "@/assets/images/character.png";
+import Modal from "../common/Modal";
 
 type Props = {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setIsChecked: React.Dispatch<React.SetStateAction<number>>;
+  isChecked: number;
 };
 
-const Modal = ({ setIsOpen, setIsChecked }: Props) => {
+const HomeModal = ({ setIsOpen, setIsChecked, isChecked }: Props) => {
   // ESC로 닫기 + 스크롤 잠금
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -22,40 +23,59 @@ const Modal = ({ setIsOpen, setIsChecked }: Props) => {
     };
   }, [setIsOpen]);
 
-  const portalRoot = document.getElementById("portal-root") ?? document.body;
-
-  return createPortal(
-    <div
-      role="dialog"
-      aria-modal="true"
-      className="fixed inset-0 z-[2000] bg-black/50 flex items-center justify-center"
-      onClick={() => setIsOpen(false)} // 배경 클릭 시 닫기
-    >
-      <div
-        className="relative bg-white p-6 text-heading1 text-black rounded-lg flex flex-col gap-6"
-        onClick={e => e.stopPropagation()} // 내용 클릭 시 전파 막기
-      >
-        마음 건강 체크
-        <div className="flex items-center justify-center w-full text-body2 flex-col gap-4">
-          <img src={Character} alt="character" />
-          평소 하던 집안일이나 가벼운 활동을 하기에
-          <br /> 기운이 충분하다고 느껴지시나요?
-        </div>
+  return (
+    <Modal setIsOpen={setIsOpen}>
+      마음 건강 체크
+      <div className="flex items-center justify-center w-full text-body2 flex-col gap-4">
+        <img src={Character} alt="character" />
+        {isChecked === 0 && (
+          <>
+            평소 하던 집안일이나 가벼운 활동을 하기에
+            <br /> 기운이 충분하다고 느껴지시나요?
+          </>
+        )}
+        {isChecked !== 0 && <>좋은 기분으로 오늘 하루 계속 이어가요!</>}
+      </div>
+      {isChecked === 0 && (
         <div className="flex flex-col gap-2 w-full items-center justify-center">
-          <button className="button-secondary" onClick={() => setIsChecked(1)}>
+          <button
+            className="button-secondary"
+            onClick={() => {
+              setIsChecked(1);
+              setIsOpen(false);
+            }}
+          >
             그럼요
           </button>
-          <button className="button-secondary" onClick={() => setIsChecked(2)}>
+          <button
+            className="button-secondary"
+            onClick={() => {
+              setIsChecked(2);
+              setIsOpen(false);
+            }}
+          >
             글쎄요
           </button>
-          <button className="button-secondary" onClick={() => setIsChecked(3)}>
+          <button
+            className="button-secondary"
+            onClick={() => {
+              setIsChecked(3);
+              setIsOpen(false);
+            }}
+          >
             아니요
           </button>
         </div>
-      </div>
-    </div>,
-    portalRoot
+      )}
+      {isChecked !== 0 && (
+        <div className="flex flex-col gap-2 w-full items-center justify-center">
+          <button className="button-primary" onClick={() => setIsOpen(false)}>
+            좋아요
+          </button>
+        </div>
+      )}
+    </Modal>
   );
 };
 
-export default Modal;
+export default HomeModal;

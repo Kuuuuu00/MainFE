@@ -80,8 +80,8 @@ api.interceptors.response.use(
       );
 
       // 백엔드 응답 스펙에 맞춰 키 이름 변경 가능
-      const newAccessToken = (resp.data as any)?.accessToken;
-      const newRefreshToken = (resp.data as any)?.refreshToken;
+      const newAccessToken = resp.data.result.result.accessToken;
+      const newRefreshToken = resp.data.result.result.refreshToken;
 
       if (!newAccessToken) {
         throw new Error("No accessToken in refresh response");
@@ -98,7 +98,7 @@ api.interceptors.response.use(
       original.headers = original.headers ?? {};
       original.headers.Authorization = `Bearer ${newAccessToken}`;
       return api(original);
-    } catch (e) {
+    } catch (e: unknown) {
       flushQueue(null);
       useTokenStore.getState().clearTokens();
       return Promise.reject(e);

@@ -3,11 +3,14 @@ import { useNavigate } from "react-router-dom";
 
 import Edit from "@/assets/icons/common/edit.svg?react";
 import { registerApi } from "@/apis/register/registerApi";
+import useTokenStore from "@/stores/useTokenStore";
 
 const RegisterPage = () => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const [nickname, setNickname] = useState("");
+
+  const { setAccessToken, setRefreshToken, setUserId } = useTokenStore();
   const navigate = useNavigate();
 
   const handleWrapperClick = () => {
@@ -17,7 +20,11 @@ const RegisterPage = () => {
 
   const handleRegister = async () => {
     const result = await registerApi(nickname);
+    console.log(result);
     if (result) {
+      setAccessToken(result.result.accessToken);
+      setRefreshToken(result.result.refreshToken);
+      setUserId(result.result.userId);
       navigate("/");
     }
   };
@@ -42,20 +49,21 @@ const RegisterPage = () => {
             className="text-body-sb text-black placeholder:text-gray-400 active:outline-none focus:outline-none w-full"
             value={nickname}
             onChange={e => setNickname(e.target.value)}
+            minLength={2}
             maxLength={10}
           />
           {nickname.length > 0 ? (
             <Edit className="w-6 h-6" />
           ) : (
             <p className="text-body-sb text-gray-600 whitespace-nowrap">
-              최대 10자
+              2~10자
             </p>
           )}
         </div>
       </div>
       <button
         className="button-primary"
-        disabled={nickname.length === 0}
+        disabled={nickname.length < 2 || nickname.length > 10}
         onClick={handleRegister}
       >
         확인

@@ -12,17 +12,17 @@ import FourthPlant from "@/components/home/FourthPlant";
 
 import "@/styles/home/swiper.css";
 import BottomSheet from "@/components/bottom-sheet/BottomSheet";
+import useTokenStore from "@/stores/useTokenStore";
 
 const HomePage = () => {
   const navigate = useNavigate();
   const [isOnboarding, setIsOnboarding] = useState(true);
   const [isLoading, setIsLoading] = useState(true); // 스플래시 표시용
+  const { accessToken } = useTokenStore();
 
   useEffect(() => {
-    const token = localStorage.getItem("NapulNapul-accessToken");
-
     const timer = setTimeout(() => {
-      if (token) {
+      if (!accessToken) {
         // 온보딩으로 보낼 때는 스플래시 유지 (isLoading을 false로 하지 않음)
         navigate("/onboarding", { replace: true });
         return; // 아래 코드 실행 안 함

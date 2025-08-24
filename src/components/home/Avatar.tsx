@@ -3,11 +3,12 @@ import Bird from "@/assets/images/bird.png";
 import Char2 from "@/assets/images/char2.png";
 import { useState, useEffect } from "react";
 import Modal from "./Modal";
+import BirdModal from "./BirdModal";
 
 const Avatar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isChecked, setIsChecked] = useState<number>(0);
-
+  const [isOpenBird, setIsOpenBird] = useState(false);
   useEffect(() => {
     if (isChecked === 1 || isChecked === 2 || isChecked === 3) {
       const timer = setTimeout(() => {
@@ -28,6 +29,7 @@ const Avatar = () => {
           src={Bird}
           alt="bird"
           className="absolute bottom-0 right-20 w-24 h-auto"
+          onClick={() => setIsOpenBird(true)}
         />
         {isChecked === 0 && (
           <div className="flex gap-4 flex-col absolute top-20 left-8 bg-white px-6 py-5 text-body-sb text-black rounded-lg">
@@ -42,9 +44,6 @@ const Avatar = () => {
             >
               마음 건강 체크
             </button>
-            {isOpen && (
-              <Modal setIsOpen={setIsOpen} setIsChecked={setIsChecked} />
-            )}
             <div className="w-0 h-10 border-l-20 border-l-transparent border-r-20 border-r-transparent border-t-20 border-t-white absolute top-43 left-30 -translate-x-1/2 " />
           </div>
         )}
@@ -66,10 +65,19 @@ const Avatar = () => {
             <div className="w-0 h-10 border-l-20 border-l-transparent border-r-20 border-r-transparent border-t-20 border-t-white absolute top-15 left-30 -translate-x-1/2 " />
           </div>
         )}
+        {isOpen && (
+          <Modal
+            setIsOpen={setIsOpen}
+            setIsChecked={setIsChecked}
+            isChecked={isChecked}
+          />
+        )}
+        {isOpenBird && <BirdModal setIsOpen={setIsOpenBird} />}
         <img
           src={Char2}
           alt="char2"
           className="absolute top-70 left-25 w-24 h-auto"
+          onClick={() => setIsOpen(true)}
         />
       </div>
     </div>
