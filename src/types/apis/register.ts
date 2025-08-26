@@ -1,5 +1,7 @@
-export type RegisterType = {
+export type PostRegisterResponse = {
   accessToken: string;
   refreshToken: string;
-  newAccount: boolean;
+  userId: number;
+  nickname: string;
+  newUser: boolean;
 };

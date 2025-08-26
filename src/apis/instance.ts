@@ -1,5 +1,6 @@
 // src/lib/api.ts
 import axios, { AxiosError, InternalAxiosRequestConfig } from "axios";
+
 import useTokenStore from "@/stores/useTokenStore";
 
 type RetryConfig = InternalAxiosRequestConfig & { _retry?: boolean };
@@ -79,9 +80,9 @@ api.interceptors.response.use(
         { headers: { Authorization: "" } } // access 필요 없게 강제 제거(백엔드 정책에 맞게 조정)
       );
 
-      // 백엔드 응답 스펙에 맞춰 키 이름 변경 가능
-      const newAccessToken = resp.data.result.result.accessToken;
-      const newRefreshToken = resp.data.result.result.refreshToken;
+      // 공통 응답 래퍼 구조에 맞춰 파싱
+      const newAccessToken = resp.data.result.accessToken;
+      const newRefreshToken = resp.data.result.refreshToken;
 
       if (!newAccessToken) {
         throw new Error("No accessToken in refresh response");

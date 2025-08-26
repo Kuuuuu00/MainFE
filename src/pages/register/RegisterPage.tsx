@@ -1,17 +1,15 @@
 import { useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 import Edit from "@/assets/icons/common/edit.svg?react";
-import { registerApi } from "@/apis/register/registerApi";
-import useTokenStore from "@/stores/useTokenStore";
+import useRegister from "@/hooks/register/useRegister";
 
 const RegisterPage = () => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const [nickname, setNickname] = useState("");
 
-  const { setAccessToken, setRefreshToken, setUserId } = useTokenStore();
-  const navigate = useNavigate();
+  // useRegister 훅으로 분리
+  const { register } = useRegister();
 
   const handleWrapperClick = () => {
     // div 클릭 시 input에 포커스
@@ -19,14 +17,7 @@ const RegisterPage = () => {
   };
 
   const handleRegister = async () => {
-    const result = await registerApi(nickname);
-    console.log(result);
-    if (result) {
-      setAccessToken(result.result.accessToken);
-      setRefreshToken(result.result.refreshToken);
-      setUserId(result.result.userId);
-      navigate("/");
-    }
+    await register(nickname);
   };
 
   return (
