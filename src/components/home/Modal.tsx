@@ -1,5 +1,7 @@
 import { useEffect } from "react";
+
 import Character from "@/assets/images/character.png";
+
 import Modal from "../common/Modal";
 
 type Props = {

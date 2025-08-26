@@ -1,11 +1,12 @@
-import js from "@eslint/js";
-import typescriptParser from "@typescript-eslint/parser";
+import { globalIgnores } from "eslint/config";
 import prettierPlugin from "eslint-plugin-prettier";
 import reactHooks from "eslint-plugin-react-hooks";
 import reactRefresh from "eslint-plugin-react-refresh";
 import importSort from "eslint-plugin-simple-import-sort";
-import { globalIgnores } from "eslint/config";
 import tseslint from "typescript-eslint";
+
+import js from "@eslint/js";
+import typescriptParser from "@typescript-eslint/parser";
 
 export default tseslint.config([
   globalIgnores(["dist", "build", "node_modules", ".yarn"]),

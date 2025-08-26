@@ -1,17 +1,18 @@
 import { useEffect, useState } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination } from "swiper/modules";
-import { useNavigate } from "react-router-dom";
 
-import "swiper/css";
-import "swiper/css/pagination";
-import "@/styles/swiper.css";
+import { useNavigate } from "react-router-dom";
+import { Pagination } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
 
 import OnBoarding1 from "@/assets/images/onboarding/onboarding1.png";
 import OnBoarding2 from "@/assets/images/onboarding/onboarding2.png";
 import OnBoarding3 from "@/assets/images/onboarding/onboarding3.png";
 import OnBoarding4 from "@/assets/images/onboarding/onboarding4.png";
 import Splash from "@/components/common/Splash";
+
+import "swiper/css";
+import "swiper/css/pagination";
+import "@/styles/swiper.css";
 
 export default function OnBoardingPage() {
   const [isLastSlide, setIsLastSlide] = useState(false);

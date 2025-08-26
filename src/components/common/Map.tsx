@@ -1,7 +1,6 @@
 import { useState } from "react";
 
 import MapImage from "@/assets/images/map.png";
-
 import MapModal from "@/components/map/Modal";
 
 const Map = ({ isNumber }: { isNumber: number }) => {

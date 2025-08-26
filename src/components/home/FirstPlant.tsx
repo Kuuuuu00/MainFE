@@ -1,10 +1,8 @@
 import { useState } from "react";
 
 import Background from "@/assets/images/background/background1.png";
-
 import Map from "@/components/common/Map";
 import Avatar from "@/components/home/Avatar";
-
 import Lock from "@/components/lock/Lock";
 import UnLock from "@/components/lock/UnLock";
 

@@ -1,26 +1,55 @@
-/* styles/home/swiper.css */
 .home-swiper .swiper-pagination {
-  bottom: 110px !important;
-  z-index: 10 !important;
+  bottom: 110px;
+  z-index: 10;
 }
 .home-swiper .swiper-pagination-bullet {
-  background: var(--color-white) !important;
-  opacity: 0.4 !important;
+  background: var(--color-white);
+  opacity: 0.4;
 }
 .home-swiper .swiper-pagination-bullet-active {
-  opacity: 1 !important;
-  width: 10px !important;
-  height: 10px !important;
+  opacity: 1;
+  width: 10px;
+  height: 10px;
 }
+
+.onboarding-pagination {
+  /* 불릿 색(활성) / 비활성 색 */
+  --swiper-pagination-color: var(--color-gray-600, #4b5563);
+  --swiper-pagination-bullet-inactive-color: var(--color-gray-200, #e5e7eb);
+
+  /* 크기/간격 옵션도 변수로 가능 */
+  --swiper-pagination-bullet-size: 8px;
+  --swiper-pagination-bullet-horizontal-gap: 6px;
+
+  position: static;
+  margin-top: 12px;
+  margin-bottom: 8px;
+}
+
 .onboarding-swiper .swiper-pagination {
-  bottom: 40px !important;
-  z-index: 10 !important;
+  z-index: 10;
 }
 /* styles/onboarding/swiper.css */
-.onboarding-swiper .swiper-pagination-bullet {
-  background-color: var(--color-gray-200) !important;
-  opacity: 1 !important;
+/* 온보딩 전용 */
+.onboarding-pagination .swiper-pagination-bullet {
+  background-color: var(--color-gray-200); /* ← fallback 추가 */
+  opacity: 1;
 }
-.onboarding-swiper .swiper-pagination-bullet-active {
-  background-color: var(--color-gray-600) !important;
+.onboarding-pagination .swiper-pagination-bullet-active {
+  background-color: var(—color-gray-600);
+}
+
+.selection-detail-swiper {
+  /* Swiper에서 제공하는 CSS 변수를 활용 */
+  --swiper-pagination-color: var(--color-gray-600);
+  --swiper-pagination-bullet-inactive-color: var(--color-gray-200,);
+  --swiper-pagination-bullet-size: 8px; /* 불릿 크기 */
+  --swiper-pagination-bullet-horizontal-gap: 6px; /* 불릿 간격 */
+}
+
+.selection-detail-swiper .swiper-pagination {
+  position: static; /* 아래 붙이기 */
+  margin-top: 12px;
+  margin-bottom: 8px;
+  z-index: 10;
 }

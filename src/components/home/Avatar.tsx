@@ -1,9 +1,11 @@
-import Plant from "@/assets/images/plant.png";
+import { useEffect, useState } from "react";
+
 import Bird from "@/assets/images/bird.png";
 import Char2 from "@/assets/images/char2.png";
-import { useState, useEffect } from "react";
-import Modal from "./Modal";
+import Plant from "@/assets/images/plant.png";
+
 import BirdModal from "./BirdModal";
+import Modal from "./Modal";
 
 const Avatar = () => {
   const [isOpen, setIsOpen] = useState(false);

@@ -1,18 +1,18 @@
 import { useEffect, useState } from "react";
+
 import { useNavigate } from "react-router-dom";
-import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
 
-import LoadingDots from "@/components/loading/loading";
-
+import BottomSheet from "@/components/bottom-sheet/BottomSheet";
 import FirstPlant from "@/components/home/FirstPlant";
+import FourthPlant from "@/components/home/FourthPlant";
 import SecondPlant from "@/components/home/SecondPlant";
 import ThirdPlant from "@/components/home/ThirdPlant";
-import FourthPlant from "@/components/home/FourthPlant";
+import LoadingDots from "@/components/loading/loading";
+import useTokenStore from "@/stores/useTokenStore";
 
 import "@/styles/home/swiper.css";
-import BottomSheet from "@/components/bottom-sheet/BottomSheet";
-import useTokenStore from "@/stores/useTokenStore";
 
 const HomePage = () => {
   const navigate = useNavigate();
