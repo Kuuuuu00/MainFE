@@ -1,5 +1,6 @@
 export interface WishTree {
   currentStage: string;
+  nextStage: string;
   currentPoints: number;
   requiredPointsForNextStage: number;
   progressPercent: number;
