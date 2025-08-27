@@ -19,7 +19,9 @@ const ThirdPlant = ({
   isOpen: boolean;
   garden: GardenSummary | null;
 }) => {
-  const [isUnlocked, setIsUnlocked] = useState<BottomSheetType>("lock");
+  const [isUnlocked, setIsUnlocked] = useState<BottomSheetType>(
+    garden?.locked ? "lock" : "unlock"
+  );
   return (
     <div
       className="w-full h-full flex flex-col relative items-center justify-center bg-cover bg-center bg-no-repeat"
@@ -44,6 +46,7 @@ const ThirdPlant = ({
                 <button
                   onClick={() => setIsUnlocked("unlock")}
                   className={`m-4 text-white bg-gray-400 p-3 text-body2 rounded-lg`}
+                  disabled={garden?.locked}
                 >
                   충분하지 않아요
                 </button>

@@ -308,7 +308,7 @@ const BottomSheet: React.FC<{ setIsModalOpen: (isOpen: boolean) => void }> = ({
             </div>
             <div className="flex flex-col mt-4 h-2 w-full rounded-lg gap-1 text-body-sb bg-gray-200 text-black relative">
               <div
-                className="absolute top-0 left-0 h-full bg-primary-font rounded-l-lg"
+                className="absolute top-0 left-0 h-full bg-primary-font rounded-lg"
                 style={{ width: `${percent}%` }}
               />
             </div>
