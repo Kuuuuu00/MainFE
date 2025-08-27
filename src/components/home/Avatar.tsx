@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 
 import Watering from "@/assets/images/background/watering.png";
-import Bird from "@/assets/images/bird.png";
-import Char2 from "@/assets/images/char2.png";
+import Bird from "@/assets/images/bird.webp";
+import Char2 from "@/assets/images/char2.webp";
 
 import BirdModal from "./BirdModal";
 import Modal from "./Modal";

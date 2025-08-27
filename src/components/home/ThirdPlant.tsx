@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import Background from "@/assets/images/background/background3.png";
+import Background from "@/assets/images/background/background3.webp";
 import Map from "@/components/common/Map";
 import Avatar from "@/components/home/Avatar";
 import Lock from "@/components/lock/Lock";

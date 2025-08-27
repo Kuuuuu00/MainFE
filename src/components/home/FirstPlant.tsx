@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 
 import Sun from "@/assets/icons/sun.svg?react";
 import Water from "@/assets/icons/water.svg?react";
-import Background from "@/assets/images/background/background1.png";
+import Background from "@/assets/images/background/background1.webp";
 import SunLight from "@/assets/images/background/sunlight.png";
 import Plant from "@/assets/images/plant.png";
 import Toast from "@/components/common/Toast";

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import Character from "@/assets/images/character.png";
+import Character from "@/assets/images/char.webp";
 
 import axios from "@/apis/instance";
 
