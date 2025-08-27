@@ -145,7 +145,7 @@ const FirstPlant = ({
       <div className="relative z-20 flex h-full w-full flex-col items-center justify-center ">
         <header className="relative flex w-full items-center justify-between p-4 text-heading1 text-white">
           <Map isNumber={1} />
-          {garden?.avatar.avatarName}
+          {garden?.avatar?.avatarName || Plant}
           <div className="h-12 w-12" />
         </header>
 

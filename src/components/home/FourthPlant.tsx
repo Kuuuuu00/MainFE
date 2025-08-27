@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import Background from "@/assets/images/background/background4.webp";
+import Plant from "@/assets/images/plant.png";
 import Map from "@/components/common/Map";
 import Avatar from "@/components/home/Avatar";
 import Lock from "@/components/lock/Lock";
@@ -64,7 +65,7 @@ const FourthPlant = ({
             </header>
             <Avatar
               isWater={false}
-              avatarUri={garden?.avatar.avatarImageUrl || ""}
+              avatarUri={garden?.avatar?.avatarImageUrl || Plant}
               setIsModalOpen={setIsModalOpen}
               isOpen={isOpen}
             />

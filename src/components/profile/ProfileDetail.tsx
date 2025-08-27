@@ -4,6 +4,7 @@ import Water from "@/assets/icons/water.svg?react";
 import Background from "@/assets/images/background/background2.png";
 import Watering from "@/assets/images/background/watering.png";
 import Character from "@/assets/images/char2.png";
+import Plant from "@/assets/images/plant.png";
 import Drop from "@/assets/images/profile/drop.png";
 import LetterBox from "@/assets/images/profile/letterbox.png";
 import Toast from "@/components/common/Toast";
@@ -83,7 +84,7 @@ const ProfileDetail = ({
         <div className="absolute top-6 left-7 right-7 flex items-center justify-between">
           <div className="w-15" /> {/* 왼쪽 고정 공간 */}
           <span className="text-title1 text-white">
-            {garden.avatarInfo.avatarName}
+            {garden?.avatarInfo?.avatarName || Plant}
           </span>
           <div className="w-15 flex items-center justify-end gap-1">
             <img src={Drop} alt="drop" className="w-6 h-6" />
@@ -96,7 +97,7 @@ const ProfileDetail = ({
         {/* 중앙 아바타 */}
         <div className="absolute bottom-[16vh] w-full flex flex-col items-center justify-center">
           <img
-            src={garden.avatarInfo.avatarImageUrl}
+            src={garden?.avatarInfo?.avatarImageUrl || Plant}
             alt="avatar"
             className="w-66 h-auto absolute bottom-0 left-1/2 -translate-x-1/2"
           />
