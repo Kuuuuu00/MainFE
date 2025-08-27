@@ -171,7 +171,7 @@ const FirstPlant = ({
 
         <Avatar
           isWater={isWater}
-          avatarUri={garden?.avatar.avatarImageUrl || Plant}
+          avatarUri={garden?.avatar?.avatarImageUrl || Plant}
           setIsModalOpen={setIsModalOpen}
           isOpen={isOpen}
         />
