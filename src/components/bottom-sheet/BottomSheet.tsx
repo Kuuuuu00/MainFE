@@ -14,9 +14,9 @@ const BottomSheet: React.FC<{ setIsModalOpen: (isOpen: boolean) => void }> = ({
   const { data } = usePanelApi();
   console.log(data);
   // ===== 표시용 상태 =====
-  const [isChecked] = useState(data?.isCheckingCompleted);
-  const [isChecked2] = useState(data?.isDairyCompleted);
-  const [isChecked3] = useState(data?.isQuizCompleted);
+  const [isChecked, setIsChecked] = useState(data?.isCheckingCompleted);
+  const [isChecked2, setIsChecked2] = useState(data?.isDairyCompleted);
+  const [isChecked3, setIsChecked3] = useState(data?.isQuizCompleted);
   const [percent] = useState(data?.wishTree.progressPercent);
   const randomNum = (Math.floor(Math.random() * 3) + 1) % 2;
   const path =
@@ -27,6 +27,11 @@ const BottomSheet: React.FC<{ setIsModalOpen: (isOpen: boolean) => void }> = ({
   // ===== 스냅/드래그 파라미터 =====
 
   // 스냅 완료 상태를 보관(초기엔 닫힘 위치로 시작)
+  useEffect(() => {
+    setIsChecked(data?.isCheckingCompleted);
+    setIsChecked2(data?.isDairyCompleted);
+    setIsChecked3(data?.isQuizCompleted);
+  }, [data]);
 
   // ===== DOM/드래그 제어용 ref =====
   const rafId = useRef<number | null>(null);

@@ -8,14 +8,21 @@ import Modal from "../common/Modal";
 import useSurvey from "@/hooks/survey/useSurvey";
 import { PostSurveyResponse } from "@/types/apis/survey";
 
-
 type Props = {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setIsChecked: React.Dispatch<React.SetStateAction<number>>;
   isChecked: number;
+  isAnswered: boolean;
+  setIsAnswered: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const HomeModal = ({ setIsOpen, setIsChecked, isChecked }: Props) => {
+const HomeModal = ({
+  setIsOpen,
+  setIsChecked,
+  isChecked,
+  isAnswered,
+  setIsAnswered,
+}: Props) => {
   const { getSurvey, getSurveyMutation } = useSurvey();
   const [survey, setSurvey] = useState<PostSurveyResponse | null>(null);
 
@@ -38,10 +45,10 @@ const HomeModal = ({ setIsOpen, setIsChecked, isChecked }: Props) => {
       const surveyQuestion = await getSurvey();
       console.log(surveyQuestion);
       setSurvey(surveyQuestion);
+      setIsAnswered(surveyQuestion.answered);
     };
     fetchSurvey();
   }, []);
-
 
   const handleCheck = async (answer: number) => {
     console.log(survey?.id, answer);
@@ -57,15 +64,15 @@ const HomeModal = ({ setIsOpen, setIsChecked, isChecked }: Props) => {
       마음 건강 체크
       <div className="flex items-center justify-center w-full text-body2 flex-col gap-4">
         <img src={Character} alt="character" />
-        {isChecked === 0 && (
+        {!isAnswered && (
           <>
             {survey?.question}
             {getSurveyMutation.isPending && <div>로딩중</div>}
           </>
         )}
-        {isChecked !== 0 && <>좋은 기분으로 오늘 하루 계속 이어가요!</>}
+        {isAnswered && <>좋은 기분으로 오늘 하루 계속 이어가요!</>}
       </div>
-      {isChecked === 0 && (
+      {!isAnswered && (
         <div className="flex flex-col gap-2 w-full items-center justify-center">
           <button
             className="button-secondary"
@@ -99,7 +106,7 @@ const HomeModal = ({ setIsOpen, setIsChecked, isChecked }: Props) => {
           </button>
         </div>
       )}
-      {isChecked !== 0 && (
+      {isAnswered && (
         <div className="flex flex-col gap-2 w-full items-center justify-center">
           <button className="button-primary" onClick={() => setIsOpen(false)}>
             좋아요
