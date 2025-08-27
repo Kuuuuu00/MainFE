@@ -7,6 +7,8 @@
  */
 
 import { create } from "zustand";
+import { createJSONStorage, persist } from "zustand/middleware";
+
 /**
  * @description 선택된 아바타의 상세 정보
  * @property {string | null} description - 아바타에 대한 설명
@@ -66,20 +68,29 @@ const initialState: Omit<AvatarCreationState, "actions"> = {
 /**
  * @description 아바타 생성 및 선택 플로우의 상태를 관리하는 Zustand 스토어.
  */
-export const useAvatarCreationStore = create<AvatarCreationState>(set => ({
-  ...initialState,
-  actions: {
-    completeCreation: () => set({ pickCreation: true }),
-    completeSelection: () => set({ pickSelection: true }),
-    setPickSelectionAvatar: (avatar: Avatar) =>
-      set({ pickSelectionAvatar: avatar }),
+export const useAvatarCreationStore = create<AvatarCreationState>()(
+  persist(
+    (set, get) => ({
+      ...initialState,
+      ...get(),
+      actions: {
+        completeCreation: () => set({ pickCreation: true }),
+        completeSelection: () => set({ pickSelection: true }),
+        setPickSelectionAvatar: (avatar: Avatar) =>
+          set({ pickSelectionAvatar: avatar }),
 
-    setPickCreationAvatar: (avatar: Avatar) =>
-      set({ pickCreationAvatar: avatar }),
+        setPickCreationAvatar: (avatar: Avatar) =>
+          set({ pickCreationAvatar: avatar }),
 
-    setPickAvatar: (avatar: Avatar) => set({ pickAvatar: avatar }),
+        setPickAvatar: (avatar: Avatar) => set({ pickAvatar: avatar }),
 
-    setAvatarName: (avatar: string) => set({ avatarName: avatar }),
-    setActiveOption: option => set({ activeOption: option }),
-  },
-}));
+        setAvatarName: (avatar: string) => set({ avatarName: avatar }),
+        setActiveOption: option => set({ activeOption: option }),
+      },
+    }),
+    {
+      name: "avatar-creation",
+      storage: createJSONStorage(() => localStorage),
+    }
+  )
+);

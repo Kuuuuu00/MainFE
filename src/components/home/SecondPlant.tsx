@@ -6,11 +6,13 @@ import Avatar from "@/components/home/Avatar";
 import Lock from "@/components/lock/Lock";
 import UnLock from "@/components/lock/UnLock";
 
+import { useAvatarCreationStore } from "@/stores/avatarCreationStore";
+
 type BottomSheetType = "lock" | "unlock" | "clear";
 
 const SecondPlant = () => {
   const [isUnlocked, setIsUnlocked] = useState<BottomSheetType>("lock");
-
+  const { pickAvatar } = useAvatarCreationStore();
   return (
     <div
       className="w-full h-full flex flex-col relative items-center justify-center bg-cover bg-center bg-no-repeat"
@@ -51,7 +53,7 @@ const SecondPlant = () => {
               몽순몽순
               <div className="justify-self-end w-12 h-12" />
             </header>
-            <Avatar />
+            <Avatar isWater={false} avatarUri={pickAvatar.img || ""} />
           </div>
         </>
       )}

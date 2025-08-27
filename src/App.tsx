@@ -15,6 +15,7 @@ import Layout from "@/components/layout/Layout";
 import Navbar from "@/components/layout/Navbar";
 
 import SplashPage from "./pages/splash/SplashPage";
+import OnboardingPage from "@/pages/splash/OnBoardingPage";
 
 import "swiper/css";
 import "swiper/css/pagination";
@@ -36,8 +37,9 @@ const App = () => {
         <Route path="splash" element={<SplashPage />} />
         <Route path="design" element={<Design />} />
         {RegistrationRoutes}
-        <Route path="/register" element={<RegisterPage />} />
         <Route path="/log/:id" element={<LogDetailPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/onboarding" element={<OnboardingPage />} />
       </Route>
     </Routes>
   );

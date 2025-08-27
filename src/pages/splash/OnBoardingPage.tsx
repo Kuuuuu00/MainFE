@@ -34,8 +34,8 @@ export default function OnBoardingPage() {
         modules={[Pagination]} // Pagination 모듈 추가
         spaceBetween={30} // 슬라이드 간격
         slidesPerView={1} // 한 번에 보이는 슬라이드 개수
-        pagination={{ clickable: false }} // 동그라미 활성화 + 클릭 이동 가능
-        loop={true} // 마지막 슬라이드에서 종료되는 것 방지
+        pagination={{ clickable: true }} // 동그라미 활성화 + 클릭 이동 가능
+        loop={false} // 마지막 슬라이드에서 종료되는 것 방지
         onSlideChange={swiper => {
           setIsLastSlide(swiper.isEnd);
         }}

@@ -1,8 +1,10 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import Character from "@/assets/images/character.png";
 
 import Modal from "../common/Modal";
+import axios from "@/apis/instance";
+import useSurvey from "@/hooks/survey/useSurvey";
 
 type Props = {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -11,6 +13,9 @@ type Props = {
 };
 
 const HomeModal = ({ setIsOpen, setIsChecked, isChecked }: Props) => {
+  const { getSurvey, getSurveyMutation } = useSurvey();
+  const [survey, setSurvey] = useState<string>();
+
   // ESC로 닫기 + 스크롤 잠금
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -25,6 +30,22 @@ const HomeModal = ({ setIsOpen, setIsChecked, isChecked }: Props) => {
     };
   }, [setIsOpen]);
 
+  useEffect(() => {
+    const fetchSurvey = async () => {
+      const survey = await getSurvey();
+      setSurvey(survey);
+    };
+    fetchSurvey();
+  }, []);
+
+  const handleCheck = async () => {
+    const response = await axios.post("/api/v1/survey/answer", {
+      questionId: survey,
+      answer: isChecked,
+    });
+    console.log(response.data);
+  };
+
   return (
     <Modal setIsOpen={setIsOpen}>
       마음 건강 체크
@@ -32,8 +53,8 @@ const HomeModal = ({ setIsOpen, setIsChecked, isChecked }: Props) => {
         <img src={Character} alt="character" />
         {isChecked === 0 && (
           <>
-            평소 하던 집안일이나 가벼운 활동을 하기에
-            <br /> 기운이 충분하다고 느껴지시나요?
+            {survey}
+            {getSurveyMutation.isPending && <div>로딩중</div>}
           </>
         )}
         {isChecked !== 0 && <>좋은 기분으로 오늘 하루 계속 이어가요!</>}

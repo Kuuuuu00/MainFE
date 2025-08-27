@@ -12,7 +12,9 @@ import ThirdPlant from "@/components/home/ThirdPlant";
 import LoadingDots from "@/components/loading/loading";
 import useTokenStore from "@/stores/useTokenStore";
 
-import "@/styles/home/swiper.css";
+import "@/styles/swiper.css";
+
+import axios from "@/apis/instance";
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -35,6 +37,14 @@ const HomePage = () => {
 
     return () => clearTimeout(timer);
   }, [navigate]);
+
+  useEffect(() => {
+    const fetchSurvey = async () => {
+      const survey = await axios.get("/api/v1/home");
+      console.log(survey.data);
+    };
+    fetchSurvey();
+  }, []);
 
   if (isLoading) return <LoadingDots />;
   // 온보딩 분기면 어차피 navigate 중이므로 아무것도 렌더하지 않기

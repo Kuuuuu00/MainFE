@@ -34,7 +34,7 @@ body {
   }
 
   .button-secondary {
-    @apply w-80 py-3 bg-white text-heading2 text-primary-font border border-primary-font cursor-pointer disabled:text-gray-400 disabled:cursor-not-allowed rounded-lg disabled:bg-gray-200;
+    @apply w-full py-3 bg-white text-heading2 text-primary-font border border-primary-font cursor-pointer disabled:text-gray-400 disabled:cursor-not-allowed rounded-lg disabled:bg-gray-200;
   }
 
   /* 모바일에서 텍스트 선택 허용 (필요한 경우) */
@@ -104,6 +104,58 @@ body {
 
   .pt-safe {
     padding-top: env(safe-area-inset-top);
+  }
+
+  .balloon-wrapper {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    bottom: 0;
+    left: 0;
+  }
+
+  /* 공통 말풍선 스타일 */
+  .balloon {
+    position: relative;
+    border-radius: 10px;
+    max-width: 18rem;
+  }
+
+  /* ::after로 꼬리 만들기 */
+  .balloon::after {
+    content: "";
+    position: absolute;
+    bottom: -30px; /* 꼬리 높이 */
+    border-width: 20px;
+    z-index: 40;
+    border-style: solid;
+  }
+
+  /* 위치별 꼬리 */
+  .balloon-default::after {
+    left: 30px; /* 기본 왼쪽 */
+  }
+
+  .balloon-center::after {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .balloon-left::after {
+    left: 20px;
+  }
+
+  .balloon-right::after {
+    right: 20px;
+  }
+
+  /* 캐릭터 이미지 */
+  .char {
+    width: 6rem;
+    height: auto;
+    cursor: pointer;
   }
 }
 

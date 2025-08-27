@@ -16,7 +16,7 @@ const Modal = ({ children, setIsOpen }: Props) => {
       onClick={() => setIsOpen(false)} // 배경 클릭 시 닫기
     >
       <div
-        className="relative bg-white p-6 w-96 text-heading1 text-black rounded-lg flex flex-col gap-6 max-w-[90vw]"
+        className="relative bg-white p-6 text-heading1 text-black rounded-lg flex flex-col gap-6 w-96 max-w-[90vw]"
         onClick={e => e.stopPropagation()} // 내용 클릭 시 전파 막기
       >
         {children}

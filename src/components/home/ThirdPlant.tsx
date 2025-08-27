@@ -51,7 +51,7 @@ const ThirdPlant = () => {
               몽순몽순
               <div className="justify-self-end w-12 h-12" />
             </header>
-            <Avatar />
+            <Avatar isWater={false} avatarUri={""} />
           </div>
         </>
       )}
