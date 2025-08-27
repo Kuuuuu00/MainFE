@@ -4,6 +4,8 @@ export { default as ActiveCalendar } from "./calendar1.svg?react";
 export { default as Calendar } from "./calendar2.svg?react";
 export { default as Camera } from "./camera.svg?react";
 export { default as Chat } from "./chat.svg?react";
+export { default as Check } from "./Check.svg?react";
+export { default as UnCheck } from "./Check2.svg?react";
 export { default as Edit } from "./edit.svg?react";
 export { default as Heart } from "./heart.svg?react";
 export { default as ActiveHome } from "./home1.svg?react";

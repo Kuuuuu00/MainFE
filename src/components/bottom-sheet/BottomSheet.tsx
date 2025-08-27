@@ -1,8 +1,7 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 
 import Plant from "@/assets/icons/bottom-sheet/plant.svg?react";
-import Check from "@/assets/icons/common/check.svg?react";
-import UnCheck from "@/assets/icons/common/uncheck.svg?react";
+import { Check, UnCheck } from "@/assets/icons/common";
 import ClearFour from "@/assets/images/bottom-sheet/clearFour.svg?react";
 import ClearOne from "@/assets/images/bottom-sheet/clearOne.svg?react";
 import ClearThree from "@/assets/images/bottom-sheet/clearThree.svg?react";

@@ -1,3 +1,7 @@
+import axios from "axios";
+
+import { ErrorResponse } from "@/types/common/apiResponse.type";
+
 import useSurveyApi from "./useSurveyApi";
 
 const useSurvey = () => {
@@ -8,6 +12,9 @@ const useSurvey = () => {
       const survey = await getSurveyMutation.mutateAsync();
       return survey;
     } catch (error) {
+      if (axios.isAxiosError<ErrorResponse>(error)) {
+        throw error.response?.data.code;
+      }
       throw error;
     }
   };

@@ -1,6 +1,8 @@
 import { useState } from "react";
-import Modal from "../common/Modal";
+
 import Bird from "@/assets/images/bird.png";
+
+import Modal from "../common/Modal";
 
 type Props = {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;

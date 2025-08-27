@@ -13,7 +13,6 @@ import LoadingDots from "@/components/loading/loading";
 import useTokenStore from "@/stores/useTokenStore";
 
 import "@/styles/swiper.css";
-
 import axios from "@/apis/instance";
 
 const HomePage = () => {

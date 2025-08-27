@@ -1,9 +1,10 @@
 import { useMutation } from "@tanstack/react-query";
 import type { AxiosError } from "axios";
-import axios from "@/apis/instance";
 
-import type { GlobalResponse } from "@/types/common/apiResponse.type";
 import type { PostSurveyResponse } from "@/types/apis/survey";
+import type { GlobalResponse } from "@/types/common/apiResponse.type";
+
+import axios from "@/apis/instance";
 
 const useSurveyApi = () => {
   const getSurveyMutation = useMutation<string, AxiosError>({

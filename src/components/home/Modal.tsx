@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 
 import Character from "@/assets/images/character.png";
+// import axios from "@/apis/instance";
+import useSurvey from "@/hooks/survey/useSurvey";
 
 import Modal from "../common/Modal";
-import axios from "@/apis/instance";
-import useSurvey from "@/hooks/survey/useSurvey";
 
 type Props = {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -38,13 +38,13 @@ const HomeModal = ({ setIsOpen, setIsChecked, isChecked }: Props) => {
     fetchSurvey();
   }, []);
 
-  const handleCheck = async () => {
-    const response = await axios.post("/api/v1/survey/answer", {
-      questionId: survey,
-      answer: isChecked,
-    });
-    console.log(response.data);
-  };
+  // const handleCheck = async () => {
+  //   const response = await axios.post("/api/v1/survey/answer", {
+  //     questionId: survey,
+  //     answer: isChecked,
+  //   });
+  //   console.log(response.data);
+  // };
 
   return (
     <Modal setIsOpen={setIsOpen}>

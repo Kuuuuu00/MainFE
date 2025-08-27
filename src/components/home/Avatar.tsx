@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
 
+import Watering from "@/assets/images/background/watering.png";
 import Bird from "@/assets/images/bird.png";
 import Char2 from "@/assets/images/char2.png";
 
 import BirdModal from "./BirdModal";
 import Modal from "./Modal";
-
-import Watering from "@/assets/images/background/watering.png";
 
 const Avatar = ({
   isWater,

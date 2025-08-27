@@ -1,9 +1,9 @@
 import { useRef, useState } from "react";
 
+import { useNavigate } from "react-router-dom";
+
 import Edit from "@/assets/icons/common/edit.svg?react";
 import useRegister from "@/hooks/register/useRegister";
-
-import { useNavigate } from "react-router-dom";
 
 const RegisterPage = () => {
   const inputRef = useRef<HTMLInputElement>(null);

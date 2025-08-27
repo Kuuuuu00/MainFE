@@ -10,6 +10,7 @@ import LogDetailPage from "@/pages/log/LogDetailPage";
 import LogPage from "@/pages/log/LogPage";
 import OptionPage from "@/pages/option/OptionPage";
 import RegisterPage from "@/pages/register/RegisterPage";
+import OnboardingPage from "@/pages/splash/OnBoardingPage";
 //디자인 페이지
 import Design from "@/components/common/Design";
 //레이아웃
@@ -17,7 +18,8 @@ import Layout from "@/components/layout/Layout";
 //네비게이션
 import Navbar from "@/components/layout/Navbar";
 
-import OnboardingPage from "@/pages/splash/OnBoardingPage";
+import DailyMissionRoutes from "./routes/dailyMissionRoutes";
+
 import "swiper/css";
 import "swiper/css/pagination";
 import RegistrationRoutes from "@/routes/registrationRoutes";
@@ -40,6 +42,7 @@ const App = () => {
         <Route path="design" element={<Design />} />
         {RegistrationRoutes}
         <Route path="/log/:id" element={<LogDetailPage />} />
+        {DailyMissionRoutes}
         <Route path="/option" element={<OptionPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/onboarding" element={<OnboardingPage />} />
