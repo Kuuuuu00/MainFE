@@ -1,7 +1,10 @@
+import { useState } from "react";
+
 import { useNavigate, useParams } from "react-router-dom";
 
 import { Left, Send } from "@/assets/icons/common";
 import MyDiaryDetail from "@/components/log/MyDiaryDetail";
+import usePostComment from "@/hooks/comments/useCommentApi";
 import { useDiaryDetail } from "@/hooks/log/useDiaryDetailApi";
 
 const LogDetailPage = () => {
@@ -10,7 +13,10 @@ const LogDetailPage = () => {
 
   const diaryId = Number(id);
   const isValidId = Number.isFinite(diaryId) && diaryId > 0;
-  const { data: detail } = useDiaryDetail(isValidId ? diaryId : 0);
+  const { data: detail, refetch } = useDiaryDetail(isValidId ? diaryId : 0);
+
+  const [content, setContent] = useState("");
+  const { mutateAsync, isPending } = usePostComment(() => refetch());
 
   if (!isValidId) {
     return <section className="w-full">잘못된 일기 ID입니다.</section>;
@@ -18,6 +24,12 @@ const LogDetailPage = () => {
 
   const handleBackClick = () => {
     navigate("/log?tab=diary");
+  };
+
+  const handleSend = async () => {
+    if (!content.trim()) return;
+    await mutateAsync({ content, targetId: diaryId, targetType: "DIARY" });
+    setContent("");
   };
 
   if (!detail) {
@@ -70,9 +82,19 @@ const LogDetailPage = () => {
           <input
             type="text"
             placeholder="댓글을 입력해주세요."
+            value={content}
+            onChange={e => setContent(e.target.value)}
+            onKeyDown={e => {
+              if (e.key === "Enter" && !isPending) {
+                e.preventDefault();
+                handleSend();
+              }
+            }}
             className="flex-1 px-4 py-2 bg-gray-200 rounded-full focus:outline-none transition-colors"
           />
-          <Send className="w-8 h-8 cursor-pointer" />
+          <button onClick={handleSend} disabled={isPending}>
+            <Send className="w-8 h-8 cursor-pointer" />
+          </button>
         </div>
       </div>
     </div>

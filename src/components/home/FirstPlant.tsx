@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 
+import { AxiosError } from "axios";
+
 import Sun from "@/assets/icons/sun.svg?react";
 import Water from "@/assets/icons/water.svg?react";
 import Background from "@/assets/images/background/background1.webp";
@@ -12,7 +14,6 @@ import Map from "../common/Map";
 import Avatar from "./Avatar";
 
 import axios from "@/apis/instance";
-import { AxiosError } from "axios";
 
 const FirstPlant = ({
   setIsModalOpen,

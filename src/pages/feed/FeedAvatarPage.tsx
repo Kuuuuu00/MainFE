@@ -1,7 +1,10 @@
+import { useState } from "react";
+
 import { useNavigate, useParams } from "react-router-dom";
 
 import { Left, Send } from "@/assets/icons/common";
 import FeedDetail from "@/components/feed/FeedDetail";
+import usePostComment from "@/hooks/comments/useCommentApi";
 import { useAvatarPostDetail } from "@/hooks/feed/useAvatarPostDetailApi";
 import type { FeedDetailResult } from "@/types/feed/detail";
 
@@ -11,9 +14,18 @@ const FeedAvatarPage = () => {
 
   const id = Number(postId);
   const isValidId = Number.isFinite(id) && id > 0;
-  const { data } = useAvatarPostDetail(isValidId ? id : 0);
+  const { data, refetch } = useAvatarPostDetail(isValidId ? id : 0);
+
+  const [content, setContent] = useState("");
+  const { mutateAsync, isPending } = usePostComment(() => refetch());
 
   const handleBackClick = () => navigate("/feed");
+
+  const handleSend = async () => {
+    if (!isValidId || !content.trim()) return;
+    await mutateAsync({ content, targetId: id, targetType: "AVATAR_POST" });
+    setContent("");
+  };
 
   if (!isValidId) {
     return <section className="w-full">잘못된 게시글 ID입니다.</section>;
@@ -62,9 +74,19 @@ const FeedAvatarPage = () => {
           <input
             type="text"
             placeholder="댓글을 입력해주세요."
+            value={content}
+            onChange={e => setContent(e.target.value)}
+            onKeyDown={e => {
+              if (e.key === "Enter" && !isPending) {
+                e.preventDefault();
+                handleSend();
+              }
+            }}
             className="flex-1 px-4 py-2 bg-gray-200 rounded-full focus:outline-none transition-colors"
           />
-          <Send className="w-8 h-8 cursor-pointer" />
+          <button onClick={handleSend} disabled={isPending}>
+            <Send className="w-8 h-8 cursor-pointer" />
+          </button>
         </div>
       </div>
     </div>

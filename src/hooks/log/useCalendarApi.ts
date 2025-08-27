@@ -10,6 +10,7 @@ export const useCalendar = (y: number, m: number) =>
     queryFn: () => getCalendar(y, m),
     select: data => data.result,
     placeholderData: keepPreviousData,
+    refetchOnMount: "always",
   });
 
 export default useCalendar;

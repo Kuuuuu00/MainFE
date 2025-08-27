@@ -10,6 +10,7 @@ export const useDiaries = (year: number, month: number) =>
     queryFn: () => getDiaries(year, month),
     select: data => data.result,
     placeholderData: keepPreviousData,
+    refetchOnMount: "always",
   });
 
 export default useDiaries;

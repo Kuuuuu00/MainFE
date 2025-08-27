@@ -3,12 +3,11 @@ import { useEffect, useState } from "react";
 import Watering from "@/assets/images/background/watering.png";
 import Bird from "@/assets/images/bird.webp";
 import Char2 from "@/assets/images/char2.webp";
-
-import BirdModal from "./BirdModal";
-import Modal from "./Modal";
+import { useHomeSummaryStore } from "@/stores/useGardenStore";
 
 import Toast from "../common/Toast";
-import { useHomeSummaryStore } from "@/stores/useGardenStore";
+import BirdModal from "./BirdModal";
+import Modal from "./Modal";
 
 const Avatar = ({
   isWater,

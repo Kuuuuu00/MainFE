@@ -3,10 +3,6 @@ import { useQuery } from "@tanstack/react-query";
 import type { FollowResponse } from "@/types/follow";
 
 import { getFollowers, getFollowing } from "@/apis/follow/followApi";
-import {
-  createMockAddedResponse,
-  createMockFollowedResponse,
-} from "@/mocks/follow/follow";
 
 export const useFollowing = (userId: string | undefined) =>
   useQuery<
@@ -16,11 +12,9 @@ export const useFollowing = (userId: string | undefined) =>
   >({
     queryKey: ["following", userId],
     queryFn: () => getFollowing(userId ?? ""),
-    select: data =>
-      data.result && data.result.length > 0
-        ? data.result
-        : createMockAddedResponse().result,
+    select: data => data.result,
     enabled: !!userId,
+    refetchOnMount: "always",
   });
 
 export const useFollowers = (userId: string | undefined) =>
@@ -31,11 +25,9 @@ export const useFollowers = (userId: string | undefined) =>
   >({
     queryKey: ["followers", userId],
     queryFn: () => getFollowers(userId ?? ""),
-    select: data =>
-      data.result && data.result.length > 0
-        ? data.result
-        : createMockFollowedResponse().result,
+    select: data => data.result,
     enabled: !!userId,
+    refetchOnMount: "always",
   });
 
 export default { useFollowing, useFollowers };

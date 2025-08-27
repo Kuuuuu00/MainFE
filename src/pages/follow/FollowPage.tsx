@@ -18,6 +18,7 @@ const FollowPage = () => {
     data: following,
     isLoading: loadingFollowing,
     error: errorFollowing,
+    refetch: refetchFollowing,
   } = useFollowing(userId);
   const {
     data: followers,
@@ -27,6 +28,13 @@ const FollowPage = () => {
 
   const handleBackClick = () => {
     navigate("/feed");
+  };
+
+  const handleRemoveUser = () => {
+    // 언팔로우 성공 시 팔로잉 목록 다시 받아오기
+    if (activeTab === "added") {
+      refetchFollowing();
+    }
   };
 
   const isLoading = activeTab === "added" ? loadingFollowing : loadingFollowers;
@@ -86,7 +94,11 @@ const FollowPage = () => {
       ) : (
         <div className="w-full">
           {currentList.map(user => (
-            <UserCard key={user.userId} user={user} />
+            <UserCard
+              key={user.userId}
+              user={user}
+              onRemove={handleRemoveUser}
+            />
           ))}
         </div>
       )}

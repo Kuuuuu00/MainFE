@@ -2,9 +2,10 @@
 import axios, {
   AxiosError,
   AxiosHeaders,
-  InternalAxiosRequestConfig,
   AxiosRequestHeaders,
+  InternalAxiosRequestConfig,
 } from "axios";
+
 import useTokenStore from "@/stores/useTokenStore";
 
 type ReqConfig = InternalAxiosRequestConfig & {

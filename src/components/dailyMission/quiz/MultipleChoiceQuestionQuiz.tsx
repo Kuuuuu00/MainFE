@@ -1,6 +1,4 @@
-
 import { Check, UnCheck } from "@/assets/icons/common";
-
 
 interface MultipleChoiceQuizProps {
   quizQuestion: string;

@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router-dom";
+
 import { Chat, Heart } from "@/assets/icons/common";
 import Comment from "@/components/common/Comment";
 import type { FeedDetailResult } from "@/types/feed/detail";
@@ -7,6 +9,7 @@ type Props = {
 };
 
 const FeedDetail = ({ result }: Props) => {
+  const navigate = useNavigate();
   const formatDate = (iso: string) => {
     const d = new Date(iso);
     return `${d.getFullYear()}년 ${d.getMonth() + 1}월 ${d.getDate()}일`;
@@ -16,7 +19,10 @@ const FeedDetail = ({ result }: Props) => {
     <div className="pt-6 px-5">
       {/* 작성자 영역 */}
       <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center gap-3">
+        <div
+          className="flex items-center gap-3 cursor-pointer"
+          onClick={() => navigate(`/profile/${result.writerId}`)}
+        >
           <div className="w-8 h-8 rounded-full overflow-hidden bg-gray-200">
             {result.profileImageUrl && (
               <img

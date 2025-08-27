@@ -35,7 +35,6 @@ const OX_Quiz: React.FC<OXQuizProps> = ({
 
       if (isCorrect) {
         if (value === answerValue) {
-
           return "bg-primary-varient border-primary text-primary";
         }
       } else {
@@ -44,15 +43,12 @@ const OX_Quiz: React.FC<OXQuizProps> = ({
         }
         if (value === answerValue) {
           return "bg-primary-varient border-primary text-primary";
-
         }
       }
     }
     return selected === value
-
       ? "border-gray-600 bg-gray-400"
       : "border-gray-400 bg-white text-gray-400";
-
   };
 
   const handleClick = (value: number) => {
@@ -68,17 +64,13 @@ const OX_Quiz: React.FC<OXQuizProps> = ({
           className={`${baseBoxClass} ${getBoxClass(0)} `}
           onClick={() => handleClick(0)}
         >
-
           <OX_O width={32} height={32} />
-
         </div>
         <div
           className={`${baseBoxClass} ${getBoxClass(1)}`}
           onClick={() => handleClick(1)}
         >
-
           <OX_X width={32} height={32} />
-
         </div>
       </div>
     </div>

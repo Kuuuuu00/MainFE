@@ -45,10 +45,17 @@ export default function LogCalendar({ onSelectDate }: Props) {
   const countMap = useMemo(() => {
     const map = new Map<string, number>();
     if (!data) return map;
-    data.calendar?.forEach(({ date, emissionCompleteCount }) => {
-      const clamped = Math.min(4, Math.max(0, emissionCompleteCount));
-      map.set(date, clamped);
-    });
+
+    // 서버 응답: { year, month, days: [{ day, missionCompleteCount }] }
+    if (data && "days" in data && Array.isArray(data.days)) {
+      const { year, month } = data;
+      data.days.forEach((d: { day: number; missionCompleteCount: number }) => {
+        const iso = toISODateString(new Date(year, month - 1, d.day));
+        const clamped = Math.min(4, Math.max(0, d.missionCompleteCount ?? 0));
+        map.set(iso, clamped);
+      });
+    }
+
     return map;
   }, [data]);
 
@@ -97,7 +104,6 @@ export default function LogCalendar({ onSelectDate }: Props) {
     return ["일", "월", "화", "수", "목", "금", "토"][date.getDay()];
   };
 
-  // 현재 달과 비교하여 다음 달로 이동 가능한지 확인
   const canGoToNextMonth = () => {
     const currentMonth = new Date();
     const nextMonth = new Date(activeStartDate);

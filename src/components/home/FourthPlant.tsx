@@ -5,7 +5,6 @@ import Map from "@/components/common/Map";
 import Avatar from "@/components/home/Avatar";
 import Lock from "@/components/lock/Lock";
 import UnLock from "@/components/lock/UnLock";
-
 import { GardenSummary } from "@/types/home/garden";
 
 type BottomSheetType = "lock" | "unlock" | "clear";
