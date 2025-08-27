@@ -36,6 +36,7 @@ const FirstPlant = ({
 
   const [isToastOpen, setIsToastOpen] = useState(false);
   const [isToastOpen2, setIsToastOpen2] = useState(false);
+  const [isToastOpen3, setIsToastOpen3] = useState(false);
 
   const [message, setMessage] = useState("");
 
@@ -43,29 +44,34 @@ const FirstPlant = ({
     // 이미 애니메이션 중이면 무시
     if (isSunLight) return;
     if (!isAbleSunLight) {
-      setIsToastOpen2(true);
+      setIsToastOpen3(true);
       return;
     }
     try {
       const res = await axios.post(
         `/api/v1/gardens/${garden?.gardenId}/sunlight`
       );
+      if (res.status === 202) {
+        setIsToastOpen3(true);
+        return;
+      } else {
+        setIsSunLight(true);
+        // 기존 타이머 클리어
+        if (timerRef.current) {
+          clearTimeout(timerRef.current);
+          timerRef.current = null;
+        }
+
+        // 1초 후 꺼지게
+        timerRef.current = window.setTimeout(() => {
+          setIsSunLight(false);
+          timerRef.current = null;
+        }, 1000);
+      }
       console.log(res);
-      setIsSunLight(true);
+
       setIsAbleSunLight(false);
       setIsWater(false);
-
-      // 기존 타이머 클리어
-      if (timerRef.current) {
-        clearTimeout(timerRef.current);
-        timerRef.current = null;
-      }
-
-      // 1초 후 꺼지게
-      timerRef.current = window.setTimeout(() => {
-        setIsSunLight(false);
-        timerRef.current = null;
-      }, 1000);
     } catch (error) {
       if (error instanceof AxiosError) {
         setMessage(error.response?.data.message);
@@ -92,20 +98,28 @@ const FirstPlant = ({
         `/api/v1/gardens/${garden?.gardenId}/mywater`
       );
       console.log(res);
-      setIsAbleWater(false);
-      setIsWater(true);
       setIsSunLight(false);
-      // 기존 타이머 클리어
-      if (timerRef.current) {
-        clearTimeout(timerRef.current);
-        timerRef.current = null;
-      }
+      setIsAbleWater(false);
 
-      // 1초 후 꺼지게
-      timerRef.current = window.setTimeout(() => {
-        setIsWater(false);
-        timerRef.current = null;
-      }, 1000);
+      if (res.status === 202) {
+        setIsToastOpen2(true);
+        return;
+      } else {
+        setIsAbleWater(false);
+        setIsWater(true);
+
+        // 기존 타이머 클리어
+        if (timerRef.current) {
+          clearTimeout(timerRef.current);
+          timerRef.current = null;
+        }
+
+        // 1초 후 꺼지게
+        timerRef.current = window.setTimeout(() => {
+          setIsWater(false);
+          timerRef.current = null;
+        }, 1000);
+      }
     } catch (error) {
       if (error instanceof AxiosError) {
         setMessage(error.response?.data.message);
@@ -127,9 +141,9 @@ const FirstPlant = ({
         }}
       />
 
-      <div className="relative z-20 flex h-full w-full flex-col items-center justify-center">
+      <div className="relative z-20 flex h-full w-full flex-col items-center justify-center ">
         <header className="relative flex w-full items-center justify-between p-4 text-heading1 text-white">
-          <Map isNumber={3} />
+          <Map isNumber={1} />
           {garden?.avatar.avatarName}
           <div className="h-12 w-12" />
         </header>
@@ -169,8 +183,14 @@ const FirstPlant = ({
       )}
       {isToastOpen2 && (
         <Toast
-          message="물 주기(오전 12시) 햇빛 주기(오전 6시)에 초기화 됩니다."
+          message="물 주기는 오전 12시에 초기화 됩니다"
           onClose={() => setIsToastOpen2(false)}
+        />
+      )}
+      {isToastOpen3 && (
+        <Toast
+          message="햇빛 주기는 오전 6시에 초기화 됩니다"
+          onClose={() => setIsToastOpen3(false)}
         />
       )}
       {message && <Toast message={message} onClose={() => setMessage("")} />}

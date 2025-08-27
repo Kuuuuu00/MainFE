@@ -24,7 +24,7 @@ export default function Toast({
 
   return (
     <div
-      className={`z-60 flex justify-between items-center fixed top-10 left-1/2 max-w-[90vw] w-full -translate-x-1/2 rounded-sm text-black px-4 py-2 bg-white  transition-all duration-300 ${
+      className={`z-60 flex justify-between items-center fixed bottom-[10vh] left-1/2 max-w-[90vw] w-full -translate-x-1/2 rounded-sm text-black px-4 py-2 bg-white  transition-all duration-300 ${
         visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"
       }`}
     >

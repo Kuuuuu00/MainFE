@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import Edit from "@/assets/icons/common/edit.svg?react";
 import useRegister from "@/hooks/register/useRegister";
 
+import { Left } from "@/assets/icons/common";
+
 const RegisterPage = () => {
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -29,46 +31,58 @@ const RegisterPage = () => {
     }
   };
 
+  const handleBackClick = () => {
+    navigate("/onboarding");
+  };
+
   return (
-    <div className="h-full flex flex-col items-center py-8 px-5 gap-6">
-      <header>회원가입 헤더 수정 예정</header>
-      <div className="w-full flex flex-col flex-1 gap-6">
-        <div className="text-heading1 font-bold text-left w-full">
-          반갑습니다!
-          <br />
-          닉네임을 설정해주세요
+    <>
+      <div className="h-full flex flex-col items-center pb-8  gap-6">
+        <div className="flex items-center justify-between px-4 py-4 w-full border-b border-gray-200">
+          <button onClick={handleBackClick}>
+            <Left className="w-6 h-6 cursor-pointer" />
+          </button>
+          <h1 className="text-heading2">가입하기</h1>
+          <div className="w-6"></div>
         </div>
-        <div
-          onClick={handleWrapperClick}
-          className="cursor-text w-full bg-white border border-gray-400 active:border-gray-600 focus-within:border-gray-600 rounded-lg p-4 flex items-center justify-between"
+        <div className="w-full flex flex-col flex-1 gap-6 px-5">
+          <div className="text-heading1 font-bold text-left w-full">
+            반갑습니다!
+            <br />
+            닉네임을 설정해주세요
+          </div>
+          <div
+            onClick={handleWrapperClick}
+            className="cursor-text w-full bg-white border border-gray-400 active:border-gray-600 focus-within:border-gray-600 rounded-lg p-4 flex items-center justify-between"
+          >
+            <input
+              ref={inputRef}
+              type="text"
+              placeholder="닉네임을 입력해주세요"
+              className="text-body-sb text-black placeholder:text-gray-400 active:outline-none focus:outline-none w-full"
+              value={nickname}
+              onChange={e => setNickname(e.target.value)}
+              minLength={2}
+              maxLength={10}
+            />
+            {nickname.length > 0 ? (
+              <Edit className="w-6 h-6" />
+            ) : (
+              <p className="text-body-sb text-gray-600 whitespace-nowrap">
+                2~10자
+              </p>
+            )}
+          </div>
+        </div>
+        <button
+          className="button-primary"
+          disabled={nickname.length < 2 || nickname.length > 10}
+          onClick={handleRegister}
         >
-          <input
-            ref={inputRef}
-            type="text"
-            placeholder="닉네임을 입력해주세요"
-            className="text-body-sb text-black placeholder:text-gray-400 active:outline-none focus:outline-none w-full"
-            value={nickname}
-            onChange={e => setNickname(e.target.value)}
-            minLength={2}
-            maxLength={10}
-          />
-          {nickname.length > 0 ? (
-            <Edit className="w-6 h-6" />
-          ) : (
-            <p className="text-body-sb text-gray-600 whitespace-nowrap">
-              2~10자
-            </p>
-          )}
-        </div>
+          확인
+        </button>
       </div>
-      <button
-        className="button-primary"
-        disabled={nickname.length < 2 || nickname.length > 10}
-        onClick={handleRegister}
-      >
-        확인
-      </button>
-    </div>
+    </>
   );
 };
 

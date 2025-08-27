@@ -47,7 +47,8 @@ const MapModal = ({ isNumber, setIsOpen }: Props) => {
         <img
           src={target}
           alt={`map ${isNumber}`}
-          className="w-96 max-w-[90vw] h-auto rounded-lg shadow-xl"
+          className="w-96 max-w-[80vw] h-auto rounded-lg shadow-xl"
+          onClick={() => setIsOpen(false)}
         />
       </div>
     </div>,
