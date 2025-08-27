@@ -20,7 +20,7 @@ const navItems = [
     label: "키움일지",
   },
   {
-    path: "/search",
+    path: "/feed",
     icon: Search,
     activeIcon: ActiveSearch,
     label: "둘러보기",

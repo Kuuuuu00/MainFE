@@ -83,6 +83,19 @@ export default function LogCalendar({
     return ["일", "월", "화", "수", "목", "금", "토"][date.getDay()];
   };
 
+  // 현재 달과 비교하여 다음 달로 이동 가능한지 확인
+  const canGoToNextMonth = () => {
+    const currentMonth = new Date();
+    const nextMonth = new Date(activeStartDate);
+    nextMonth.setMonth(activeStartDate.getMonth() + 1);
+
+    return (
+      nextMonth.getFullYear() < currentMonth.getFullYear() ||
+      (nextMonth.getFullYear() === currentMonth.getFullYear() &&
+        nextMonth.getMonth() <= currentMonth.getMonth())
+    );
+  };
+
   return (
     <section className="px-4">
       <div className="mb-7 flex w-full justify-center">
@@ -98,9 +111,14 @@ export default function LogCalendar({
             {activeStartDate.getFullYear()}년 {activeStartDate.getMonth() + 1}월
           </span>
           <button
-            className="grid h-6 w-6 place-items-center cursor-pointer"
-            onClick={() => goMonth(1)}
+            className={`grid h-6 w-6 place-items-center ${
+              canGoToNextMonth()
+                ? "cursor-pointer"
+                : "cursor-not-allowed opacity-50"
+            }`}
+            onClick={() => canGoToNextMonth() && goMonth(1)}
             aria-label="next"
+            disabled={!canGoToNextMonth()}
           >
             <Right />
           </button>

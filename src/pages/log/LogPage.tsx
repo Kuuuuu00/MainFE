@@ -34,7 +34,7 @@ const LogPage = () => {
   };
 
   return (
-    <section className="w-full py-5">
+    <section className="w-full pt-5">
       {/* 헤더 */}
       <h1 className="mb-6 text-center text-heading2">키움 일지</h1>
 

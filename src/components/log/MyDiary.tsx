@@ -54,7 +54,25 @@ export default function MyDiary({ onSelectDiary }: Props) {
     );
   }, [activeStartDate]);
 
+  // 현재 달과 비교하여 다음 달로 이동 가능한지 확인
+  const canGoToNextMonth = () => {
+    const currentMonth = new Date();
+    const nextMonth = new Date(activeStartDate);
+    nextMonth.setMonth(activeStartDate.getMonth() + 1);
+
+    return (
+      nextMonth.getFullYear() < currentMonth.getFullYear() ||
+      (nextMonth.getFullYear() === currentMonth.getFullYear() &&
+        nextMonth.getMonth() <= currentMonth.getMonth())
+    );
+  };
+
   const goMonth = (diff: number) => {
+    // 다음 달로 이동하려고 하는데 현재 달보다 이후라면 이동하지 않음
+    if (diff > 0 && !canGoToNextMonth()) {
+      return;
+    }
+
     const next = new Date(activeStartDate);
     next.setMonth(activeStartDate.getMonth() + diff);
     setActiveStartDate(next);
@@ -75,9 +93,14 @@ export default function MyDiary({ onSelectDiary }: Props) {
             {activeStartDate.getFullYear()}년 {activeStartDate.getMonth() + 1}월
           </span>
           <button
-            className="grid h-6 w-6 place-items-center cursor-pointer"
-            onClick={() => goMonth(1)}
+            className={`grid h-6 w-6 place-items-center ${
+              canGoToNextMonth()
+                ? "cursor-pointer"
+                : "cursor-not-allowed opacity-50"
+            }`}
+            onClick={() => canGoToNextMonth() && goMonth(1)}
             aria-label="next"
+            disabled={!canGoToNextMonth()}
           >
             <Right />
           </button>
