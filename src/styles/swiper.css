@@ -31,7 +31,6 @@
 
 .onboarding-swiper .swiper-pagination {
   z-index: 10;
-  --swiper-theme-color: var(--color-gray-600) !important;
 }
 /* styles/onboarding/swiper.css */
 /* 온보딩 전용 */

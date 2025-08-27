@@ -86,7 +86,7 @@ const Avatar = ({
         <div className="balloon-wrapper text-body-sb z-45">
           <>
             <div
-              className={`balloon balloon-center text-body-sb gap-4 flex flex-col py-5 px-6 min-w-50 ${
+              className={`balloon balloon-center text-body-sb  gap-4 flex flex-col py-5 px-6 min-w-50 ${
                 isAnswered
                   ? "bg-transparent after:border-transparent text-transparent"
                   : "text-black bg-white after:border-l-transparent after:border-b-transparent after:border-r-transparent after:border-t-white"
@@ -105,9 +105,9 @@ const Avatar = ({
                   <div
                     className={`${
                       isChecked > 0 ? "hidden" : "block"
-                    } text-black `}
+                    } text-black`}
                   >
-                    <div className="pb-4">
+                    <div>
                       오늘도 만나서 정말 반가워요!
                       <br />
                       괜찮으시다면 오늘 하루는 어떠셨는지
@@ -159,7 +159,7 @@ const Avatar = ({
       )}
       {isToastOpen2 && (
         <Toast
-          message="물(오전 12시) 햇빛(오전 6시)에 초기화 됩니다."
+          message="물 주기(오전 12시) 햇빛 주기(오전 6시)에 초기화 됩니다."
           onClose={isClose => setIsToastOpen2(isClose)}
         />
       )}

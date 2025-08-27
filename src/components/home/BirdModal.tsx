@@ -14,7 +14,7 @@ const BirdModal = ({ setIsOpen }: Props) => {
   return (
     <Modal setIsOpen={setIsOpen}>
       <img
-        className="w-16 h-auto absolute bottom-45 left-0"
+        className="w-12 h-auto absolute bottom-32 left-0"
         src={Bird}
         alt="bird"
       />
@@ -37,16 +37,6 @@ const BirdModal = ({ setIsOpen }: Props) => {
           기록
         </div>
       </div>
-      {isRecord && (
-        <div className="text-body2 text-gray-400 text-center">
-          아직 방문한 친구들이 없어요!
-        </div>
-      )}
-      {!isRecord && (
-        <div className="text-body2 text-gray-400 text-center">
-          아직 기록이 없어요!
-        </div>
-      )}
     </Modal>
   );
 };
