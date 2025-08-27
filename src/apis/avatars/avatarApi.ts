@@ -1,3 +1,5 @@
+import Axios from "axios";
+
 import {
   CreateAvatarResponse,
   FinalChoiceAvatarRequest,
@@ -20,11 +22,10 @@ export const postCrationAvatarApi = async (
   formData: FormData
 ): Promise<CreateAvatarResponse> => {
   try {
-    const response = await axios.post("/api/v1/register/upload", formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
+    const response = await Axios.post(
+      "http://43.200.84.255:8000/process-image",
+      formData
+    );
     return response.data;
   } catch (error) {
     console.error("error :", error);

@@ -145,7 +145,6 @@ const Avatar = ({
         <Modal
           setIsOpen={setIsModalOpen}
           setIsChecked={setIsChecked}
-          isChecked={isChecked}
           setIsAnswered={setIsAnswered}
           isAnswered={isAnswered}
         />

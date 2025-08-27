@@ -1,6 +1,8 @@
 //라우터
 import { Route, Routes, useLocation } from "react-router-dom";
 
+import DeliveryPage from "@/pages/delivery/DeliveryPage";
+import UnlockGardenPlotPage from "@/pages/delivery/UnlockGardenPlotPage";
 import FeedAvatarPage from "@/pages/feed/FeedAvatarPage";
 import FeedDiaryPage from "@/pages/feed/FeedDiaryPage";
 import FeedPage from "@/pages/feed/FeedPage";
@@ -19,6 +21,7 @@ import Layout from "@/components/layout/Layout";
 //네비게이션
 import Navbar from "@/components/layout/Navbar";
 
+import CompletePage from "./pages/delivery/CompletePage";
 import DailyMissionRoutes from "./routes/dailyMissionRoutes";
 
 import "swiper/css";
@@ -47,6 +50,9 @@ const App = () => {
         <Route path="/option" element={<OptionPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/onboarding" element={<OnboardingPage />} />
+        <Route path="unlock-garden" element={<UnlockGardenPlotPage />} />
+        <Route path="delivery" element={<DeliveryPage />} />
+        <Route path="delivery/complete" element={<CompletePage />} />
         <Route path="/profile/:userId" element={<ProfilePage />} />
       </Route>
     </Routes>
