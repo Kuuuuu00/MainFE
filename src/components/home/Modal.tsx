@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 
 import Character from "@/assets/images/character.png";
-// import axios from "@/apis/instance";
-import useSurvey from "@/hooks/survey/useSurvey";
+import axios from "@/apis/instance";
 
 import Modal from "../common/Modal";
+import useSurvey from "@/hooks/survey/useSurvey";
+import { PostSurveyResponse } from "@/types/apis/survey";
 
 type Props = {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -14,7 +15,7 @@ type Props = {
 
 const HomeModal = ({ setIsOpen, setIsChecked, isChecked }: Props) => {
   const { getSurvey, getSurveyMutation } = useSurvey();
-  const [survey, setSurvey] = useState<string>();
+  const [survey, setSurvey] = useState<PostSurveyResponse | null>(null);
 
   // ESC로 닫기 + 스크롤 잠금
   useEffect(() => {
@@ -32,19 +33,21 @@ const HomeModal = ({ setIsOpen, setIsChecked, isChecked }: Props) => {
 
   useEffect(() => {
     const fetchSurvey = async () => {
-      const survey = await getSurvey();
-      setSurvey(survey);
+      const surveyQuestion = await getSurvey();
+      console.log(surveyQuestion);
+      setSurvey(surveyQuestion);
     };
     fetchSurvey();
   }, []);
 
-  // const handleCheck = async () => {
-  //   const response = await axios.post("/api/v1/survey/answer", {
-  //     questionId: survey,
-  //     answer: isChecked,
-  //   });
-  //   console.log(response.data);
-  // };
+  const handleCheck = async (answer: number) => {
+    console.log(survey?.id, answer);
+    const response = await axios.post("/api/v1/survey/answer", {
+      questionId: survey?.id,
+      answer: answer,
+    });
+    console.log(response.data);
+  };
 
   return (
     <Modal setIsOpen={setIsOpen}>
@@ -53,7 +56,7 @@ const HomeModal = ({ setIsOpen, setIsChecked, isChecked }: Props) => {
         <img src={Character} alt="character" />
         {isChecked === 0 && (
           <>
-            {survey}
+            {survey?.question}
             {getSurveyMutation.isPending && <div>로딩중</div>}
           </>
         )}
@@ -66,6 +69,7 @@ const HomeModal = ({ setIsOpen, setIsChecked, isChecked }: Props) => {
             onClick={() => {
               setIsChecked(1);
               setIsOpen(false);
+              handleCheck(1);
             }}
           >
             그럼요
@@ -75,6 +79,7 @@ const HomeModal = ({ setIsOpen, setIsChecked, isChecked }: Props) => {
             onClick={() => {
               setIsChecked(2);
               setIsOpen(false);
+              handleCheck(2);
             }}
           >
             글쎄요
@@ -84,6 +89,7 @@ const HomeModal = ({ setIsOpen, setIsChecked, isChecked }: Props) => {
             onClick={() => {
               setIsChecked(3);
               setIsOpen(false);
+              handleCheck(3);
             }}
           >
             아니요

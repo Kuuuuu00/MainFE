@@ -1,11 +1,9 @@
-import ClearOne from "@/assets/images/bottom-sheet/clearOne.svg?react";
-
 const LoadingDots = () => {
   return (
     <div className="fixed inset-0 z-[9999] flex flex-col items-center justify-center gap-6 bg-primary-varient md:max-w-[430px] md:h-[852px] mx-auto">
       {/* 텍스트 영역 */}
       <div className="text-center flex flex-col items-center gap-2">
-        <ClearOne className="w-12 h-12" />
+        🌱
         <p className="text-lg md:text-xl font-semibold text-gray-600">
           식물의 정보를
           <br />

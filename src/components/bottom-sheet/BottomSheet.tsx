@@ -1,22 +1,23 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 
+import { useNavigate } from "react-router-dom";
+
 import Plant from "@/assets/icons/bottom-sheet/plant.svg?react";
 import { Check, UnCheck } from "@/assets/icons/common";
-import ClearFour from "@/assets/images/bottom-sheet/clearFour.svg?react";
-import ClearOne from "@/assets/images/bottom-sheet/clearOne.svg?react";
-import ClearThree from "@/assets/images/bottom-sheet/clearThree.svg?react";
-import ClearTwo from "@/assets/images/bottom-sheet/clearTwo.svg?react";
-import Four from "@/assets/images/bottom-sheet/four.svg?react";
-import One from "@/assets/images/bottom-sheet/one.svg?react";
-import Three from "@/assets/images/bottom-sheet/three.svg?react";
-import Two from "@/assets/images/bottom-sheet/two.svg?react";
+import Right from "@/assets/icons/common/right.svg?react";
+import { usePanelApi } from "@/hooks/home/usePanelApi";
 
-const BottomSheet: React.FC = () => {
+const BottomSheet: React.FC<{ setIsModalOpen: (isOpen: boolean) => void }> = ({
+  setIsModalOpen,
+}) => {
+  const navigate = useNavigate();
+  const { data } = usePanelApi();
+  console.log(data);
   // ===== 표시용 상태 =====
-  const [isChecked] = useState(true);
-  const [isChecked2] = useState(false);
-  const [isChecked3] = useState(false);
-  const [level] = useState(2);
+  const [isChecked] = useState(data?.isCheckingCompleted);
+  const [isChecked2] = useState(data?.isDairyCompleted);
+  const [isChecked3] = useState(data?.isQuizCompleted);
+  const [percent] = useState(data?.wishTree.progressPercent);
 
   // ===== 스냅/드래그 파라미터 =====
 
@@ -35,7 +36,7 @@ const BottomSheet: React.FC = () => {
   const OVERDRAG = 40;
   const RESISTANCE = 0.35;
 
-  const snapPoints = [90, 560]; // [초기 90, 풀오픈 560]
+  const snapPoints = [140, 560]; // [초기 90, 풀오픈 560]
   const maxSnap = Math.max(...snapPoints);
 
   // 2) 초기 높이를 '90px'로 고정
@@ -222,24 +223,39 @@ const BottomSheet: React.FC = () => {
 
             <div className="mt-6 flex flex-col gap-3">
               {[
-                { label: "일기 쓰기", on: isChecked },
-                { label: "식물 사진 찍기", on: isChecked2 },
-                { label: "퀴즈 풀기", on: isChecked3 },
-              ].map(({ label, on }, i) => (
+                {
+                  label: "마음 건강 체크",
+                  on: isChecked,
+                  action: () => {
+                    setIsModalOpen(true);
+                  },
+                },
+                {
+                  label: "일기 쓰기",
+                  on: isChecked2,
+                  action: () => navigate("/dailyMission/writeDiary"),
+                },
+                {
+                  label: "퀴즈 풀기",
+                  on: isChecked3,
+                  action: () => navigate("/dailyMission/quiz"),
+                },
+              ].map(({ label, on, action }, i) => (
                 <div
                   key={i}
-                  className={`flex w-full justify-between rounded-lg border p-4 transition-colors
+                  className={`flex w-full justify-between rounded-lg border p-4 transition-colors items-center
                     ${
                       on
                         ? "border-transparent bg-primary-varient text-primary-font text-body1"
-                        : "border-gray-200 bg-white text-black text-body2"
+                        : "border-gray-200 bg-white text-gray-600 text-body2"
                     }`}
+                  onClick={action}
                 >
                   {label}
                   {on ? (
                     <Check className="h-8 w-8" />
                   ) : (
-                    <UnCheck className="h-8 w-8" />
+                    <Right className="h-8 w-8 text-gray-400" />
                   )}
                 </div>
               ))}
@@ -253,7 +269,7 @@ const BottomSheet: React.FC = () => {
                 소망 나무
               </div>
               <p>
-                {level > 3 ? (
+                {percent && percent > 3 ? (
                   <span>
                     지금 바로{" "}
                     <span className="text-primary-font">새로운 텃밭</span>을 열
@@ -261,80 +277,21 @@ const BottomSheet: React.FC = () => {
                   </span>
                 ) : (
                   <span>
-                    다음 텃밭을 열기까지{" "}
-                    <span className="text-primary-font"> {4 - level}레벨</span>
-                    이 남았어요!
+                    소망 나무 다음 성장까지{" "}
+                    <span className="text-primary-font">
+                      {" "}
+                      {100 - (percent || 0)}%
+                    </span>
+                    가 남았어요!
                   </span>
                 )}
               </p>
-
+            </div>
+            <div className="flex flex-col mt-4 h-2 w-full rounded-lg gap-1 text-body-sb bg-gray-200 text-black relative">
               <div
-                className={`flex items-center justify-between text-body-sb text-gray-400`}
-              >
-                <div
-                  className={`flex items-center flex-col ${
-                    level > 0 && "text-gray-600"
-                  }`}
-                >
-                  {level > 0 ? (
-                    <ClearOne className="w-12 h-12" />
-                  ) : (
-                    <One className="w-12 h-12" />
-                  )}
-                  새싹
-                </div>
-                <div
-                  className={`w-6 h-0.5 rounded-full ${
-                    level > 1 && "bg-primary"
-                  } bg-gray-200 mb-4`}
-                />
-                <div
-                  className={`flex items-center flex-col ${
-                    level > 1 && "text-gray-600"
-                  }`}
-                >
-                  {level > 1 ? (
-                    <ClearTwo className="w-12 h-12" />
-                  ) : (
-                    <Two className="w-12 h-12" />
-                  )}
-                  꽃
-                </div>
-                <div
-                  className={`w-6 h-0.5 rounded-full ${
-                    level > 2 && "bg-primary"
-                  } bg-gray-200 mb-4`}
-                />
-                <div
-                  className={`flex items-center flex-col ${
-                    level > 2 && "text-gray-600"
-                  }`}
-                >
-                  {level > 2 ? (
-                    <ClearThree className="w-12 h-12 " />
-                  ) : (
-                    <Three className="w-12 h-12" />
-                  )}
-                  열매
-                </div>
-                <div
-                  className={`w-6 h-0.5 rounded-full ${
-                    level > 3 && "bg-primary"
-                  } bg-gray-200 mb-4`}
-                />
-                <div
-                  className={`flex items-center flex-col ${
-                    level > 3 && "text-gray-600"
-                  }`}
-                >
-                  {level > 3 ? (
-                    <ClearFour className="w-12 h-12" />
-                  ) : (
-                    <Four className="w-12 h-12" />
-                  )}
-                  나무
-                </div>
-              </div>
+                className="absolute top-0 left-0 h-full bg-primary-font rounded-l-lg"
+                style={{ width: `${percent}%` }}
+              />
             </div>
           </div>
           {/* ==================== */}

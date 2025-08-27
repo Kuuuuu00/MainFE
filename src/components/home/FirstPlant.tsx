@@ -5,22 +5,46 @@ import Water from "@/assets/icons/water.svg?react";
 import Background from "@/assets/images/background/background1.png";
 import SunLight from "@/assets/images/background/sunlight.png";
 import Plant from "@/assets/images/plant.png";
-import Map from "@/components/common/Map";
-import Avatar from "@/components/home/Avatar";
-import { useAvatarCreationStore } from "@/stores/avatarCreationStore";
 
-const FirstPlant = () => {
+import Toast from "@/components/common/Toast";
+import { GardenSummary } from "@/types/home/garden";
+import axios from "@/apis/instance";
+import Map from "../common/Map";
+import Avatar from "./Avatar";
+
+const FirstPlant = ({
+  setIsModalOpen,
+  isOpen,
+  garden,
+}: {
+  setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  isOpen: boolean;
+  garden: GardenSummary;
+}) => {
+  const [isAbleSunLight, setIsAbleSunLight] = useState(
+    garden.ownerSunlightAble
+  );
+  const [isAbleWater, setIsAbleWater] = useState(garden.ownerWateringAble);
+
   const [isSunLight, setIsSunLight] = useState(false);
   const [isWater, setIsWater] = useState(false);
   const timerRef = useRef<number | null>(null);
 
-  const { pickAvatar } = useAvatarCreationStore();
+  const [isToastOpen, setIsToastOpen] = useState(false);
+  const [isToastOpen2, setIsToastOpen2] = useState(false);
 
-  const handleSunLight = () => {
+  const handleSunLight = async () => {
     // 이미 애니메이션 중이면 무시
     if (isSunLight) return;
+    if (!isAbleSunLight) {
+      setIsToastOpen2(true);
+      return;
+    }
 
+    const res = await axios.post(`/api/v1/gardens/${garden.gardenId}/sunlight`);
+    console.log(res);
     setIsSunLight(true);
+    setIsAbleSunLight(false);
     setIsWater(false);
 
     // 기존 타이머 클리어
@@ -43,10 +67,17 @@ const FirstPlant = () => {
     };
   }, []);
 
-  const handleWater = () => {
+  const handleWater = async () => {
     // 이미 애니메이션 중이면 무시
     if (isWater) return;
+    if (!isAbleWater) {
+      setIsToastOpen2(true);
+      return;
+    }
 
+    const res = await axios.post(`/api/v1/gardens/${garden.gardenId}/mywater`);
+    console.log(res);
+    setIsAbleWater(false);
     setIsWater(true);
     setIsSunLight(false);
     // 기존 타이머 클리어
@@ -79,7 +110,7 @@ const FirstPlant = () => {
       <div className="relative z-20 flex h-full w-full flex-col items-center justify-center">
         <header className="relative flex w-full items-center justify-between p-4 text-heading1 text-white">
           <Map isNumber={3} />
-          몽순몽순
+          {garden.avatar.avatarName}
           <div className="h-12 w-12" />
         </header>
 
@@ -103,8 +134,25 @@ const FirstPlant = () => {
           </button>
         </div>
 
-        <Avatar isWater={isWater} avatarUri={pickAvatar.img || Plant} />
+        <Avatar
+          isWater={isWater}
+          avatarUri={garden.avatar.avatarImageUrl || Plant}
+          setIsModalOpen={setIsModalOpen}
+          isOpen={isOpen}
+        />
       </div>
+      {isToastOpen && (
+        <Toast
+          message="마음 체크를 먼저 완료해주세요!"
+          onClose={() => setIsToastOpen(false)}
+        />
+      )}
+      {isToastOpen2 && (
+        <Toast
+          message="물 주기(오전 12시) 햇빛 주기(오전 6시)에 초기화 됩니다."
+          onClose={() => setIsToastOpen2(false)}
+        />
+      )}
     </div>
   );
 };

@@ -6,11 +6,20 @@ import Avatar from "@/components/home/Avatar";
 import Lock from "@/components/lock/Lock";
 import UnLock from "@/components/lock/UnLock";
 
+import { GardenSummary } from "@/types/home/garden";
+
 type BottomSheetType = "lock" | "unlock" | "clear";
 
-const ThirdPlant = () => {
+const ThirdPlant = ({
+  setIsModalOpen,
+  isOpen,
+  garden,
+}: {
+  setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  isOpen: boolean;
+  garden: GardenSummary | null;
+}) => {
   const [isUnlocked, setIsUnlocked] = useState<BottomSheetType>("lock");
-
   return (
     <div
       className="w-full h-full flex flex-col relative items-center justify-center bg-cover bg-center bg-no-repeat"
@@ -47,11 +56,16 @@ const ThirdPlant = () => {
         <>
           <div className="w-full h-full flex flex-col relative items-center justify-center">
             <header className="relative flex items-center justify-between w-full text-heading1 text-white p-4">
-              <Map isNumber={1} />
+              <Map isNumber={4} />
               몽순몽순
               <div className="justify-self-end w-12 h-12" />
             </header>
-            <Avatar isWater={false} avatarUri={""} />
+            <Avatar
+              isWater={false}
+              avatarUri={garden?.avatar.avatarImageUrl || ""}
+              setIsModalOpen={setIsModalOpen}
+              isOpen={isOpen}
+            />
           </div>
         </>
       )}

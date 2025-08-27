@@ -12,8 +12,11 @@ const Modal = ({ children, setIsOpen }: Props) => {
     <div
       role="dialog"
       aria-modal="true"
-      className="fixed inset-0 z-[2000] bg-black/50 flex items-center justify-center"
-      onClick={() => setIsOpen(false)} // 배경 클릭 시 닫기
+      className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center"
+      onClick={e => {
+        setIsOpen(false);
+        e.stopPropagation();
+      }} // 배경 클릭 시 닫기
     >
       <div
         className="relative bg-white p-6 text-heading1 text-black rounded-lg flex flex-col gap-6 w-96 max-w-[90vw]"
