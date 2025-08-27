@@ -1,57 +1,40 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { useNavigate } from "react-router-dom";
 
 import { Left } from "@/assets/icons/common";
 import UserCard from "@/components/follow/UserCard";
-import type { FollowResponse } from "@/types/follow";
-
-import {
-  createMockAddedResponse,
-  createMockFollowedResponse,
-} from "@/mocks/follow/follow";
+import { useFollowers, useFollowing } from "@/hooks/follow/useFollowApi";
+import useTokenStore from "@/stores/useTokenStore";
 
 type Tab = "added" | "followed"; // 내가 추가한 / 나를 추가한
 
 const FollowPage = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<Tab>("added");
-  const [addedData, setAddedData] = useState<FollowResponse>({ result: [] });
-  const [followedData, setFollowedData] = useState<FollowResponse>({
-    result: [],
-  });
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const userId = useTokenStore(state => state.userId);
+
+  const {
+    data: following,
+    isLoading: loadingFollowing,
+    error: errorFollowing,
+  } = useFollowing(userId);
+  const {
+    data: followers,
+    isLoading: loadingFollowers,
+    error: errorFollowers,
+  } = useFollowers(userId);
 
   const handleBackClick = () => {
     navigate("/feed");
   };
 
-  // Mock 데이터 로드 (백엔드 완성 후 제거)
-  useEffect(() => {
-    const loadMockData = () => {
-      setIsLoading(true);
-      try {
-        const addedMock = createMockAddedResponse();
-        const followedMock = createMockFollowedResponse();
-        setAddedData(addedMock);
-        setFollowedData(followedMock);
-      } catch {
-        setError("데이터 로드 실패");
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    loadMockData();
-  }, []);
-
-  const handleRemoveUser = (userId: number) => {
-    // 친구 삭제 로직 (백엔드 완성 후 구현)
-    console.log("친구 삭제:", userId);
-  };
-
-  const currentData = activeTab === "added" ? addedData : followedData;
+  const isLoading = activeTab === "added" ? loadingFollowing : loadingFollowers;
+  const error = (activeTab === "added" ? errorFollowing : errorFollowers)
+    ? "데이터 로드 실패"
+    : null;
+  const currentList =
+    activeTab === "added" ? (following ?? []) : (followers ?? []);
 
   return (
     <section className="w-full">
@@ -102,12 +85,8 @@ const FollowPage = () => {
         </div>
       ) : (
         <div className="w-full">
-          {currentData.result.map(user => (
-            <UserCard
-              key={user.userId}
-              user={user}
-              onRemove={handleRemoveUser}
-            />
+          {currentList.map(user => (
+            <UserCard key={user.userId} user={user} />
           ))}
         </div>
       )}

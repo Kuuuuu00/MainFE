@@ -1,4 +1,4 @@
-import type { FeedResponse } from "@/types/feed";
+import type { FeedResponse } from "@/types/feed/feedApi.type";
 
 // Mock 데이터 캐시
 const mockDataCache = new Map<string, FeedResponse>();

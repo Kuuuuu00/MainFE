@@ -9,3 +9,5 @@ export interface FeedPost {
 export interface FeedResponse {
   result: FeedPost[];
 }
+
+export type GetFeedResponse = FeedPost[];

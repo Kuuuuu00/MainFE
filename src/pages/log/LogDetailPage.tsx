@@ -2,31 +2,51 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import { Left, Send } from "@/assets/icons/common";
 import MyDiaryDetail from "@/components/log/MyDiaryDetail";
-
-import { createMockDiaryDetailResponse } from "@/mocks/log/diary";
+import { useDiaryDetail } from "@/hooks/log/useDiaryDetailApi";
 
 const LogDetailPage = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
 
-  // id가 존재하는지 확인
-  if (!id) {
-    return <section className="w-full">일기를 찾을 수 없습니다.</section>;
-  }
+  const diaryId = Number(id);
+  const isValidId = Number.isFinite(diaryId) && diaryId > 0;
+  const { data: detail } = useDiaryDetail(isValidId ? diaryId : 0);
 
-  const diaryId = parseInt(id, 10);
-
-  // 유효한 숫자인지 확인
-  if (isNaN(diaryId)) {
+  if (!isValidId) {
     return <section className="w-full">잘못된 일기 ID입니다.</section>;
   }
-
-  // 목데이터로 일기 상세 정보 가져오기
-  const diaryDetail = createMockDiaryDetailResponse(diaryId);
 
   const handleBackClick = () => {
     navigate("/log?tab=diary");
   };
+
+  if (!detail) {
+    return (
+      <div className="w-full h-full flex items-center justify-center">
+        <span className="text-gray-500">로딩 중...</span>
+      </div>
+    );
+  }
+
+  const diaryDetail = {
+    data: {
+      id: detail.id,
+      title: detail.title,
+      content: detail.content,
+      imageUrl: detail.imageUrl,
+      likeCount: detail.likeCount,
+      commentCount: detail.commentCount,
+      comment: detail.comments.map(c => ({
+        id: c.commentId,
+        profileImageUrl: c.profileImageUrl,
+        writer: c.writer,
+        content: c.content,
+      })),
+      createdAt: detail.createdAt,
+      updatedAt: detail.updatedAt,
+      public: detail.isPublic,
+    },
+  } as const;
 
   return (
     <div className="w-full h-full flex flex-col md:h-[852px]">
@@ -40,7 +60,7 @@ const LogDetailPage = () => {
       </header>
 
       {/* 메인 콘텐츠 영역 */}
-      <main className="flex-1 overflow-y-auto">
+      <main className="flex-1 overflow-y-auto scrollbar-hide">
         <MyDiaryDetail diaryDetail={diaryDetail} />
       </main>
 
@@ -50,7 +70,7 @@ const LogDetailPage = () => {
           <input
             type="text"
             placeholder="댓글을 입력해주세요."
-            className="flex-1 px-4 py-2 bg-gray-200 rounded-full focus:bg-gray-400 focus:outline-none transition-colors"
+            className="flex-1 px-4 py-2 bg-gray-200 rounded-full focus:outline-none transition-colors"
           />
           <Send className="w-8 h-8 cursor-pointer" />
         </div>

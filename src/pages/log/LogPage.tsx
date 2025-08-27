@@ -1,13 +1,11 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 import LogCalendar from "@/components/log/LogCalendar";
 import MyDiary from "@/components/log/MyDiary";
 
-import { createMockMonthlyCalendar } from "@/mocks/log/monthlyCalendar";
-
-type Tab = "potato" | "diary"; // 감자 / 일기
+type Tab = "potato" | "diary";
 
 const LogPage = () => {
   const navigate = useNavigate();
@@ -21,13 +19,6 @@ const LogPage = () => {
       setActiveTab("diary");
     }
   }, [searchParams]);
-
-  const initialData = useMemo(() => {
-    const now = new Date();
-    return createMockMonthlyCalendar(now.getFullYear(), now.getMonth() + 1);
-  }, []);
-
-  const [calendarData, setCalendarData] = useState(initialData);
 
   const handleDiarySelect = (diaryId: number) => {
     navigate(`/log/${diaryId}`);
@@ -49,7 +40,7 @@ const LogPage = () => {
             }`}
             onClick={() => setActiveTab("potato")}
           >
-            감자
+            미션
           </button>
 
           <button
@@ -67,13 +58,7 @@ const LogPage = () => {
 
       {/* 콘텐츠 */}
       {activeTab === "potato" ? (
-        <LogCalendar
-          data={calendarData}
-          onMonthChange={(y, m) =>
-            setCalendarData(createMockMonthlyCalendar(y, m))
-          }
-          onSelectDate={() => {}}
-        />
+        <LogCalendar onSelectDate={() => {}} />
       ) : (
         <MyDiary onSelectDiary={handleDiarySelect} />
       )}

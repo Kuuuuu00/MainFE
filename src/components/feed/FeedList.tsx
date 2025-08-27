@@ -1,4 +1,4 @@
-import type { FeedResponse } from "@/types/feed";
+import type { FeedResponse } from "@/types/feed/feedApi.type";
 
 type Props = {
   feedData: FeedResponse;

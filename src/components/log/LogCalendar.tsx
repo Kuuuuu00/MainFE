@@ -10,14 +10,12 @@ import {
   Level3,
   Right,
 } from "@/assets/icons/common";
-import type { MonthlyCalendarResponse } from "@/types/log/calendar";
+import useCalendar from "@/hooks/log/useCalendarApi";
 
 import "react-calendar/dist/Calendar.css";
 
 type Props = {
-  data: MonthlyCalendarResponse;
   onSelectDate?: (isoDate: string) => void;
-  onMonthChange?: (year: number, month: number) => void;
 };
 
 function toISODateString(date: Date): string {
@@ -27,28 +25,36 @@ function toISODateString(date: Date): string {
   return `${y}-${m}-${d}`;
 }
 
-export default function LogCalendar({
-  data,
-  onSelectDate,
-  onMonthChange,
-}: Props) {
+export default function LogCalendar({ onSelectDate }: Props) {
+  const now = new Date();
+  const [ym, setYm] = useState<{ y: number; m: number }>({
+    y: now.getFullYear(),
+    m: now.getMonth() + 1,
+  });
+
+  const { data } = useCalendar(ym.y, ym.m);
+
   const [activeStartDate, setActiveStartDate] = useState(
-    new Date(data.year, data.month - 1, 1)
+    new Date(ym.y, ym.m - 1, 1)
   );
 
   useEffect(() => {
-    setActiveStartDate(new Date(data.year, data.month - 1, 1));
-  }, [data.year, data.month]);
+    setActiveStartDate(new Date(ym.y, ym.m - 1, 1));
+  }, [ym.y, ym.m]);
 
   const countMap = useMemo(() => {
     const map = new Map<string, number>();
-    data.calendar.forEach(({ date, count }) => map.set(date, count));
+    if (!data) return map;
+    data.calendar?.forEach(({ date, emissionCompleteCount }) => {
+      const clamped = Math.min(4, Math.max(0, emissionCompleteCount));
+      map.set(date, clamped);
+    });
     return map;
   }, [data]);
 
   const IconByCount = (count: number) => {
     if (count >= 3) return Level3;
-    return [Level0, Level1, Level2, Level3][count] ?? Level0;
+    return [Level0, Level1, Level2, Level3][Math.min(3, count)] ?? Level0;
   };
 
   const today = new Date();
@@ -62,6 +68,14 @@ export default function LogCalendar({
 
   const tileContent = ({ date, view }: { date: Date; view: string }) => {
     if (view !== "month") return null;
+    if (!data) {
+      const Icon = IconByCount(0);
+      return (
+        <div className="mt-1 flex justify-center">
+          <Icon width={32} height={32} />
+        </div>
+      );
+    }
     const iso = toISODateString(date);
     const count = isFutureDate(date) ? 0 : (countMap.get(iso) ?? 0);
     const Icon = IconByCount(count);
@@ -76,7 +90,7 @@ export default function LogCalendar({
     const next = new Date(activeStartDate);
     next.setMonth(activeStartDate.getMonth() + diff);
     setActiveStartDate(next);
-    onMonthChange?.(next.getFullYear(), next.getMonth() + 1);
+    setYm({ y: next.getFullYear(), m: next.getMonth() + 1 });
   };
 
   const formatWeekday = (_locale: string | undefined, date: Date) => {
@@ -149,7 +163,6 @@ export default function LogCalendar({
             const sameMonth = date.getMonth() === activeStartDate.getMonth();
             if (!sameMonth) classes.push("text-gray-400");
             if (isFutureDate(date)) classes.push("text-gray-400", "is-future");
-            // 오늘은 배경변경 없이 텍스트만 primary (기본 CSS에서도 처리하지만 안전하게 한 번 더)
             const iso = toISODateString(date);
             if (iso === toISODateString(today)) classes.push("text-primary");
             return classes.join(" ");

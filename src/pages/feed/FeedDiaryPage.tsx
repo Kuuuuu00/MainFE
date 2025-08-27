@@ -2,24 +2,46 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import { Left, Send } from "@/assets/icons/common";
 import FeedDetail from "@/components/feed/FeedDetail";
-import type { FeedDetailResponse } from "@/types/feed/detail";
-
-import { createMockFeedDiaryDetail } from "@/mocks/feed/detail";
+import { useDiaryDetail } from "@/hooks/log/useDiaryDetailApi";
+import type { FeedDetailResult } from "@/types/feed/detail";
 
 const FeedDiaryPage = () => {
   const { postId } = useParams<{ postId: string }>();
   const navigate = useNavigate();
 
-  if (!postId)
-    return <section className="w-full">게시글을 찾을 수 없습니다.</section>;
   const id = Number(postId);
-  if (Number.isNaN(id))
-    return <section className="w-full">잘못된 게시글 ID입니다.</section>;
-
-  const detail: FeedDetailResponse = createMockFeedDiaryDetail(id);
-  const { result } = detail;
+  const isValidId = Number.isFinite(id) && id > 0;
+  const { data } = useDiaryDetail(isValidId ? id : 0);
 
   const handleBackClick = () => navigate("/feed");
+
+  if (!isValidId) {
+    return <section className="w-full">잘못된 게시글 ID입니다.</section>;
+  }
+
+  if (!data) {
+    return (
+      <div className="w-full h-full flex items-center justify-center">
+        <span className="text-gray-500">로딩 중...</span>
+      </div>
+    );
+  }
+
+  const result: FeedDetailResult = {
+    id: data.id,
+    writerId: data.writerId,
+    writerName: data.writerName,
+    profileImageUrl: data.profileImageUrl,
+    content: data.content,
+    imageUrl: data.imageUrl,
+    isLiked: data.isLiked,
+    likeCount: data.likeCount,
+    commentCount: data.commentCount,
+    comments: data.comments,
+    createdAt: data.createdAt,
+    updatedAt: data.updatedAt,
+    isPublic: data.isPublic,
+  };
 
   return (
     <div className="w-full h-full flex flex-col md:h-[852px]">
@@ -40,7 +62,7 @@ const FeedDiaryPage = () => {
           <input
             type="text"
             placeholder="댓글을 입력해주세요."
-            className="flex-1 px-4 py-2 bg-gray-200 rounded-full focus:bg-gray-400 focus:outline-none transition-colors"
+            className="flex-1 px-4 py-2 bg-gray-200 rounded-full focus:outline-none transition-colors"
           />
           <Send className="w-8 h-8 cursor-pointer" />
         </div>
