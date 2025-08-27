@@ -69,7 +69,7 @@ const HomePage = () => {
           <FirstPlant
             setIsModalOpen={setIsModalOpen}
             isOpen={isModalOpen}
-            garden={gardens[0]}
+            garden={gardens[0] || null}
           />
         </SwiperSlide>
         <SwiperSlide>

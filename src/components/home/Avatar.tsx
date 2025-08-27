@@ -9,6 +9,7 @@ import Modal from "./Modal";
 
 import Toast from "../common/Toast";
 
+
 const Avatar = ({
   isWater,
   avatarUri,

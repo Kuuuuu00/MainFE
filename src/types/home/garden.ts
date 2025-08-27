@@ -8,7 +8,7 @@ export interface GardenSummary {
   gardenId: number;
   gardenSlotNumber: number;
   avatar: Avatar;
-  ownerWateringAble: boolean;
+  ownerWateringAble: boolean | null;
   ownerSunlightAble: boolean;
 }
 

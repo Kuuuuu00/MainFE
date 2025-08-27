@@ -1,4 +1,6 @@
+
 import { Check, UnCheck } from "@/assets/icons/common";
+
 
 interface DiaryFooterProps {
   isPublic: boolean;

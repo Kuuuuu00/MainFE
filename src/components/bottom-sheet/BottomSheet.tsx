@@ -18,6 +18,11 @@ const BottomSheet: React.FC<{ setIsModalOpen: (isOpen: boolean) => void }> = ({
   const [isChecked2] = useState(data?.isDairyCompleted);
   const [isChecked3] = useState(data?.isQuizCompleted);
   const [percent] = useState(data?.wishTree.progressPercent);
+  const randomNum = (Math.floor(Math.random() * 3) + 1) % 2;
+  const path =
+    randomNum === 1
+      ? "/dailyMission/quiz/multipleChoice"
+      : "/dailyMission/quiz/ox";
 
   // ===== 스냅/드래그 파라미터 =====
 
@@ -238,7 +243,7 @@ const BottomSheet: React.FC<{ setIsModalOpen: (isOpen: boolean) => void }> = ({
                 {
                   label: "퀴즈 풀기",
                   on: isChecked3,
-                  action: () => navigate("/dailyMission/quiz"),
+                  action: () => navigate(path),
                 },
               ].map(({ label, on, action }, i) => (
                 <div

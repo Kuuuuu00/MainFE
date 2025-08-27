@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 
 import Character from "@/assets/images/character.png";
+
 import axios from "@/apis/instance";
 
 import Modal from "../common/Modal";
 import useSurvey from "@/hooks/survey/useSurvey";
 import { PostSurveyResponse } from "@/types/apis/survey";
+
 
 type Props = {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -39,6 +41,7 @@ const HomeModal = ({ setIsOpen, setIsChecked, isChecked }: Props) => {
     };
     fetchSurvey();
   }, []);
+
 
   const handleCheck = async (answer: number) => {
     console.log(survey?.id, answer);

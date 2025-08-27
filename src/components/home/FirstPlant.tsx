@@ -5,12 +5,13 @@ import Water from "@/assets/icons/water.svg?react";
 import Background from "@/assets/images/background/background1.png";
 import SunLight from "@/assets/images/background/sunlight.png";
 import Plant from "@/assets/images/plant.png";
-
 import Toast from "@/components/common/Toast";
 import { GardenSummary } from "@/types/home/garden";
-import axios from "@/apis/instance";
+
 import Map from "../common/Map";
 import Avatar from "./Avatar";
+
+import axios from "@/apis/instance";
 
 const FirstPlant = ({
   setIsModalOpen,
@@ -19,12 +20,14 @@ const FirstPlant = ({
 }: {
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   isOpen: boolean;
-  garden: GardenSummary;
+  garden: GardenSummary | null;
 }) => {
-  const [isAbleSunLight, setIsAbleSunLight] = useState(
-    garden.ownerSunlightAble
+  const [isAbleSunLight, setIsAbleSunLight] = useState<boolean>(
+    garden?.ownerSunlightAble || false
   );
-  const [isAbleWater, setIsAbleWater] = useState(garden.ownerWateringAble);
+  const [isAbleWater, setIsAbleWater] = useState(
+    garden?.ownerWateringAble || false
+  );
 
   const [isSunLight, setIsSunLight] = useState(false);
   const [isWater, setIsWater] = useState(false);
@@ -41,7 +44,9 @@ const FirstPlant = ({
       return;
     }
 
-    const res = await axios.post(`/api/v1/gardens/${garden.gardenId}/sunlight`);
+    const res = await axios.post(
+      `/api/v1/gardens/${garden?.gardenId}/sunlight`
+    );
     console.log(res);
     setIsSunLight(true);
     setIsAbleSunLight(false);
@@ -75,7 +80,7 @@ const FirstPlant = ({
       return;
     }
 
-    const res = await axios.post(`/api/v1/gardens/${garden.gardenId}/mywater`);
+    const res = await axios.post(`/api/v1/gardens/${garden?.gardenId}/mywater`);
     console.log(res);
     setIsAbleWater(false);
     setIsWater(true);
@@ -110,7 +115,7 @@ const FirstPlant = ({
       <div className="relative z-20 flex h-full w-full flex-col items-center justify-center">
         <header className="relative flex w-full items-center justify-between p-4 text-heading1 text-white">
           <Map isNumber={3} />
-          {garden.avatar.avatarName}
+          {garden?.avatar.avatarName}
           <div className="h-12 w-12" />
         </header>
 
@@ -136,7 +141,7 @@ const FirstPlant = ({
 
         <Avatar
           isWater={isWater}
-          avatarUri={garden.avatar.avatarImageUrl || Plant}
+          avatarUri={garden?.avatar.avatarImageUrl || Plant}
           setIsModalOpen={setIsModalOpen}
           isOpen={isOpen}
         />
