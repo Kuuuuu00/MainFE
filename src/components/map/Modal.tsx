@@ -3,9 +3,9 @@ import { useEffect } from "react";
 import { createPortal } from "react-dom";
 
 import Map1 from "@/assets/images/map/map1.png";
-import Map4 from "@/assets/images/map/map2.png";
-import Map2 from "@/assets/images/map/map3.png";
-import Map3 from "@/assets/images/map/map4.png";
+import Map2 from "@/assets/images/map/map2.png";
+import Map3 from "@/assets/images/map/map3.png";
+import Map4 from "@/assets/images/map/map4.png";
 
 type Props = {
   isNumber: number; // 1~4
