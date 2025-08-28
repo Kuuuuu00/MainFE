@@ -5,12 +5,12 @@ import type { Swiper as SwiperType } from "swiper";
 import { Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
-import Log1 from "@/assets/mocks/log1.svg?react";
-import Log2 from "@/assets/mocks/log2.svg?react";
-import Log3 from "@/assets/mocks/log3.svg?react";
-import Log4 from "@/assets/mocks/log4.svg?react";
-import Log5 from "@/assets/mocks/log5.svg?react";
-import Log6 from "@/assets/mocks/log6.svg?react";
+import Log1 from "@/assets/mocks/산세베리아.png";
+import Log2 from "@/assets/mocks/석화.png";
+import Log3 from "@/assets/mocks/선인장.png";
+import Log4 from "@/assets/mocks/알로에.png";
+import Log5 from "@/assets/mocks/연화바위솔.png";
+import Log6 from "@/assets/mocks/황금염좌.png";
 import Button from "@/components/common/Button";
 import ProgressBar from "@/components/common/ProgressBar";
 import HomeHeader from "@/components/home/HomeHeader";
@@ -25,12 +25,12 @@ const UnlockGardenPlotPage: React.FC = () => {
   };
 
   const logs = [
-    { id: 1, name: "통나무 1", Icon: Log1 },
-    { id: 2, name: "통나무 2", Icon: Log2 },
-    { id: 3, name: "통나무 3", Icon: Log3 },
-    { id: 4, name: "통나무 4", Icon: Log4 },
-    { id: 5, name: "통나무 5", Icon: Log5 },
-    { id: 6, name: "통나무 6", Icon: Log6 },
+    { id: 1, name: "산세베리아", Icon: Log1 },
+    { id: 2, name: "석화", Icon: Log2 },
+    { id: 3, name: "선인장", Icon: Log3 },
+    { id: 4, name: "알로에", Icon: Log4 },
+    { id: 5, name: "연화바위솔", Icon: Log5 },
+    { id: 6, name: "황금염좌", Icon: Log6 },
   ];
 
   const [selectedId, setSelectedId] = useState<number>(logs[0].id);
@@ -56,7 +56,7 @@ const UnlockGardenPlotPage: React.FC = () => {
 
       <div className="flex flex-1 flex-col">
         <h1 className="mt-4 text-2xl font-bold pl-6.25">
-          원하는 통나무를 선택해주세요
+          받고 싶은 식물을 골라주세요!
         </h1>
 
         {/* Swiper */}
@@ -69,7 +69,7 @@ const UnlockGardenPlotPage: React.FC = () => {
                 centeredSlides={true}
                 spaceBetween={16}
                 pagination={{ el: ".custom-pagination", clickable: true }}
-                className="w-full h-75.75 rounded-2xl"
+                className="w-full h-75.75"
                 initialSlide={logs.findIndex(log => log.id === selectedId)}
                 onSlideChange={handleSlideChange}
               >
@@ -84,7 +84,11 @@ const UnlockGardenPlotPage: React.FC = () => {
                         selectedId === log.id ? "" : "bg-white opacity-50"
                       }`}
                     >
-                      <log.Icon className="w-full h-full rounded-[12px]" />
+                      <img
+                        src={log.Icon}
+                        alt={log.name}
+                        className="w-65 h-75 object-cover rounded-[12px]"
+                      />
                     </div>
                   </SwiperSlide>
                 ))}

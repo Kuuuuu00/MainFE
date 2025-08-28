@@ -7,10 +7,10 @@ import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import CreationDefaultImg from "@/assets/images/creationAvatar/CreationDefultImg.png";
-import mockImg from "@/assets/mocks/berry.svg?url";
+import mockImg from "@/assets/mocks/output.png";
 import Button from "@/components/common/Button";
 import Pending from "@/components/registration/creationFlow/Pending";
-import { usePostCreationAvatar } from "@/hooks/avatars/usePostCreationAvatarApi";
+// import { usePostCreationAvatar } from "@/hooks/avatars/usePostCreationAvatarApi";
 import { useAvatarCreationStore } from "@/stores/avatarCreationStore";
 
 const AvatarCreationOption: React.FC = () => {
@@ -18,7 +18,7 @@ const AvatarCreationOption: React.FC = () => {
   const { pickCreationAvatar, pickCreation, activeOption, actions } =
     useAvatarCreationStore();
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const { mutate: uploadAvatar, isPending } = usePostCreationAvatar();
+  // const { mutate: uploadAvatar, isPending } = usePostCreationAvatar();
 
   /***********************목  *********************************/
   const [isMockPending, setIsMockPending] = useState(false);
@@ -73,30 +73,59 @@ const AvatarCreationOption: React.FC = () => {
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
+    setIsMockPending(true);
 
-    const formData = new FormData();
-    formData.append("image", file);
+    setTimeout(() => {
+      actions.setPickCreationAvatar({
+        id: null,
+        description: "생성된 아바타(목)",
+        img: mockImg,
+      });
 
-    uploadAvatar(formData, {
-      onSuccess: res => {
-        actions.setPickCreationAvatar({
-          id: null,
-          description: "생성된 아바타",
-          img: res.imageUrl,
-        });
-        console.log("AvatarCreationOption.tss 에서 성공");
-        navigate("/registration/creation-detail");
-      },
-      onError: err => {
-        console.error(err);
-        alert("AvatarCreationOption.tss 에서 아바타 업로드에 실패했습니다.");
-      },
-    });
+      actions.setPickAvatar({
+        id: null,
+        description: "생성된 아바타(목)",
+        img: mockImg,
+      });
+
+      actions.setActiveOption("creation");
+
+      setIsMockPending(false); // 로딩 끝
+      navigate("/registration/creation-detail");
+    }, 2500); //
   };
-
-  if (isPending) {
+  if (isMockPending) {
     return <Pending />;
   }
+  /******************************************* 목 데이터 ************************************************/
+
+  // const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const file = e.target.files?.[0];
+  //   if (!file) return;
+
+  //   const formData = new FormData();
+  //   formData.append("image", file);
+
+  //   uploadAvatar(formData, {
+  //     onSuccess: res => {
+  //       actions.setPickCreationAvatar({
+  //         id: null,
+  //         description: "생성된 아바타",
+  //         img: res.imageUrl,
+  //       });
+  //       console.log("AvatarCreationOption.tss 에서 성공");
+  //       navigate("/registration/creation-detail");
+  //     },
+  //     onError: err => {
+  //       console.error(err);
+  //       alert("AvatarCreationOption.tss 에서 아바타 업로드에 실패했습니다.");
+  //     },
+  //   });
+  // };
+
+  // if (isPending) {
+  //   return <Pending />;
+  // }
 
   return (
     <div
