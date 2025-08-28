@@ -260,7 +260,7 @@ const BottomSheet: React.FC<{ setIsModalOpen: (isOpen: boolean) => void }> = ({
                         ? "border-transparent bg-primary-varient text-primary-font text-body1"
                         : "border-gray-200 bg-white text-gray-600 text-body2"
                     }`}
-                  onClick={action}
+                  onClick={on ? () => {} : action}
                 >
                   {label}
                   {on ? (
@@ -280,7 +280,7 @@ const BottomSheet: React.FC<{ setIsModalOpen: (isOpen: boolean) => void }> = ({
                 소망 나무
               </div>
               <p>
-                {percent && percent > 100 ? (
+                {percent && percent >= 100 ? (
                   <span>
                     지금 바로{" "}
                     <span className="text-primary-font">새로운 텃밭</span>을 열

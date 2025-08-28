@@ -15,6 +15,9 @@ export const useHomeApi = () => {
     queryKey: ["homeSummary"],
     queryFn: homeApi, // 반드시 data만 반환하도록 구현되어 있어야 함
     select: data => data.result, // ← 순수하게 값만 변환
+    refetchOnMount: true, // 마운트 때 항상 다시 불러옴(= stale이면 refetch)
+    refetchOnWindowFocus: true, // 탭으로 돌아올 때도 refetch
+    refetchOnReconnect: true,
   });
 };
 

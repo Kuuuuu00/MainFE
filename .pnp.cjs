@@ -55,6 +55,7 @@ const RAW_RUNTIME_STATE =
           ["prettier", "npm:3.6.2"],\
           ["react", "npm:19.1.0"],\
           ["react-calendar", "virtual:a26df681d8f5cb886104bc63845e90f74ff917ae53e0ae4622b7df50bf61ef86383bf875b5dd214089733dd74f1e7aa37ddc1b4f7c3a8adab11cd2d56ad5a4b3#npm:6.0.0"],\
+          ["react-daum-postcode", "virtual:a26df681d8f5cb886104bc63845e90f74ff917ae53e0ae4622b7df50bf61ef86383bf875b5dd214089733dd74f1e7aa37ddc1b4f7c3a8adab11cd2d56ad5a4b3#npm:3.2.0"],\
           ["react-dom", "virtual:a26df681d8f5cb886104bc63845e90f74ff917ae53e0ae4622b7df50bf61ef86383bf875b5dd214089733dd74f1e7aa37ddc1b4f7c3a8adab11cd2d56ad5a4b3#npm:19.1.0"],\
           ["react-router-dom", "virtual:a26df681d8f5cb886104bc63845e90f74ff917ae53e0ae4622b7df50bf61ef86383bf875b5dd214089733dd74f1e7aa37ddc1b4f7c3a8adab11cd2d56ad5a4b3#npm:7.6.3"],\
           ["swiper", "npm:11.2.10"],\
@@ -3411,6 +3412,7 @@ const RAW_RUNTIME_STATE =
           ["prettier", "npm:3.6.2"],\
           ["react", "npm:19.1.0"],\
           ["react-calendar", "virtual:a26df681d8f5cb886104bc63845e90f74ff917ae53e0ae4622b7df50bf61ef86383bf875b5dd214089733dd74f1e7aa37ddc1b4f7c3a8adab11cd2d56ad5a4b3#npm:6.0.0"],\
+          ["react-daum-postcode", "virtual:a26df681d8f5cb886104bc63845e90f74ff917ae53e0ae4622b7df50bf61ef86383bf875b5dd214089733dd74f1e7aa37ddc1b4f7c3a8adab11cd2d56ad5a4b3#npm:3.2.0"],\
           ["react-dom", "virtual:a26df681d8f5cb886104bc63845e90f74ff917ae53e0ae4622b7df50bf61ef86383bf875b5dd214089733dd74f1e7aa37ddc1b4f7c3a8adab11cd2d56ad5a4b3#npm:19.1.0"],\
           ["react-router-dom", "virtual:a26df681d8f5cb886104bc63845e90f74ff917ae53e0ae4622b7df50bf61ef86383bf875b5dd214089733dd74f1e7aa37ddc1b4f7c3a8adab11cd2d56ad5a4b3#npm:7.6.3"],\
           ["swiper", "npm:11.2.10"],\
@@ -4586,6 +4588,28 @@ const RAW_RUNTIME_STATE =
           "@types/react-dom",\
           "@types/react",\
           "react-dom",\
+          "react"\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["react-daum-postcode", [\
+      ["npm:3.2.0", {\
+        "packageLocation": "./.yarn/cache/react-daum-postcode-npm-3.2.0-0a348d1fe7-3ddb92430d.zip/node_modules/react-daum-postcode/",\
+        "packageDependencies": [\
+          ["react-daum-postcode", "npm:3.2.0"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:a26df681d8f5cb886104bc63845e90f74ff917ae53e0ae4622b7df50bf61ef86383bf875b5dd214089733dd74f1e7aa37ddc1b4f7c3a8adab11cd2d56ad5a4b3#npm:3.2.0", {\
+        "packageLocation": "./.yarn/__virtual__/react-daum-postcode-virtual-450a9c4f0b/0/cache/react-daum-postcode-npm-3.2.0-0a348d1fe7-3ddb92430d.zip/node_modules/react-daum-postcode/",\
+        "packageDependencies": [\
+          ["@types/react", "npm:19.1.8"],\
+          ["react", "npm:19.1.0"],\
+          ["react-daum-postcode", "virtual:a26df681d8f5cb886104bc63845e90f74ff917ae53e0ae4622b7df50bf61ef86383bf875b5dd214089733dd74f1e7aa37ddc1b4f7c3a8adab11cd2d56ad5a4b3#npm:3.2.0"]\
+        ],\
+        "packagePeers": [\
+          "@types/react",\
           "react"\
         ],\
         "linkType": "HARD"\

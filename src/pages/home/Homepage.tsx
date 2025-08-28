@@ -15,6 +15,7 @@ import { useHomeSummaryStore } from "@/stores/useGardenStore";
 import useTokenStore from "@/stores/useTokenStore";
 
 import "@/styles/swiper.css";
+import TrackingModal from "@/components/home/tracking/Modal";
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -23,7 +24,8 @@ const HomePage = () => {
   const { accessToken } = useTokenStore();
   const { updateMissions, setUser, gardens, setGardens } =
     useHomeSummaryStore();
-  const { data } = useHomeApi();
+  const { data, refetch } = useHomeApi();
+  const [isTrackingModalOpen, setIsTrackingModalOpen] = useState(true);
 
   useEffect(() => {
     if (data) {
@@ -56,14 +58,18 @@ const HomePage = () => {
   // 온보딩 분기면 어차피 navigate 중이므로 아무것도 렌더하지 않기
   if (isOnboarding) return null;
 
+  const handleSlideChange = () => {
+    refetch();
+  };
+
   return (
     <div className="relative flex flex-col h-full items-center justify-between w-full bg-transparent">
       <Swiper
         modules={[Pagination]} // Pagination 모듈 추가
         slidesPerView={1} // 한 번에 보이는 슬라이드 개수
         pagination={{ clickable: false }} // 동그라미 활성화 + 클릭 이동 가능
-        loop={false} // 마지막 슬라이드에서 종료되는 것 방지
         className="home-swiper w-full flex-1 relative" // 아래 여백을 조금 주기 (점 안 잘리게)
+        onSlideChange={handleSlideChange}
       >
         <SwiperSlide>
           <FirstPlant
@@ -95,6 +101,12 @@ const HomePage = () => {
         </SwiperSlide>
       </Swiper>
       <BottomSheet setIsModalOpen={setIsModalOpen} />
+      {isTrackingModalOpen && (
+        <TrackingModal
+          setIsOpen={setIsTrackingModalOpen}
+          isOpen={isTrackingModalOpen}
+        />
+      )}
     </div>
   );
 };

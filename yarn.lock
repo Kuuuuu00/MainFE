@@ -2615,6 +2615,7 @@ __metadata:
     prettier: "npm:^3.6.2"
     react: "npm:^19.1.0"
     react-calendar: "npm:^6.0.0"
+    react-daum-postcode: "npm:^3.2.0"
     react-dom: "npm:^19.1.0"
     react-router-dom: "npm:^7.6.3"
     swiper: "npm:^11.2.10"
@@ -3660,6 +3661,15 @@ __metadata:
     "@types/react":
       optional: true
   checksum: 10c0/4c79d7a7d757eb35fb85c3c8f48ce36f2565d9889c1c67392ecb8cb031e46894fb320c5771d9e7293333230d2776b9b5250a5828833c3c1cb67eb41394fb3bc2
+  languageName: node
+  linkType: hard
+
+"react-daum-postcode@npm:^3.2.0":
+  version: 3.2.0
+  resolution: "react-daum-postcode@npm:3.2.0"
+  peerDependencies:
+    react: ">=16.8.0"
+  checksum: 10c0/3ddb92430d6b8590a05e3938c7c26a29c4cf9ba5e8f35e5c30f0433e7d46b77863d6c7ee3a06f66ba6c2bee4bee389be75b62dae23339bb54cd7fe09c372904c
   languageName: node
   linkType: hard
 

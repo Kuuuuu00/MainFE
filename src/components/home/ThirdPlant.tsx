@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router-dom";
+
 import { useEffect, useRef, useState } from "react";
 
 import { AxiosError } from "axios";
@@ -12,11 +14,13 @@ import Lock from "@/components/lock/Lock";
 import UnLock from "@/components/lock/UnLock";
 import { GardenSummary } from "@/types/home/garden";
 
+import Null from "@/assets/images/null.webp";
+import Plus from "@/assets/icons/common/plus.svg?react";
+
 import Toast from "../common/Toast";
 
 import axios from "@/apis/instance";
-
-type BottomSheetType = "lock" | "unlock" | "clear";
+import SunLight from "@/assets/images/background/sunlight.png";
 
 const ThirdPlant = ({
   setIsModalOpen,
@@ -27,13 +31,19 @@ const ThirdPlant = ({
   isOpen: boolean;
   garden: GardenSummary | null;
 }) => {
-  const [isUnlocked, setIsUnlocked] = useState<BottomSheetType>(
-    !garden?.locked ? "clear" : garden?.unlockable ? "unlock" : "lock"
-  );
+  console.log(garden);
+
+  const isUnlocked = !garden?.locked
+    ? "clear"
+    : garden?.unlockable
+      ? "unlock"
+      : "lock";
   const [isSunLight, setIsSunLight] = useState(false);
   const [isWater, setIsWater] = useState(false);
-  const [isAbleSunLight, setIsAbleSunLight] = useState(false);
-  const [isAbleWater, setIsAbleWater] = useState(false);
+  const [isAbleSunLight, setIsAbleSunLight] = useState(
+    garden?.ownerSunlightAble
+  );
+  const [isAbleWater, setIsAbleWater] = useState(garden?.ownerWateringAble);
 
   const timerRef = useRef<number | null>(null);
 
@@ -42,13 +52,15 @@ const ThirdPlant = ({
   const [isToastOpen2, setIsToastOpen2] = useState(false);
   const [message, setMessage] = useState("");
 
+  const navigate = useNavigate();
+
   const handleUnlock = async () => {
     try {
       const response = await axios.post("/api/v1/gardens/unlock");
       console.log(response);
 
       if (response.status === 200) {
-        setIsUnlocked("clear");
+        navigate("/unlock-garden");
       }
     } catch (error) {
       console.error(error);
@@ -149,6 +161,14 @@ const ThirdPlant = ({
         backgroundImage: `url(${Background})`,
       }}
     >
+      <div
+        className={`pointer-events-none absolute inset-0 z-10 bg-cover bg-center bg-no-repeat transition-opacity duration-500`}
+        style={{
+          backgroundImage: `url(${SunLight})`,
+          opacity: isSunLight ? 1 : 0,
+        }}
+      />
+
       {isUnlocked !== "clear" && (
         <>
           <div className="flex-1 flex items-center justify-center w-full">
@@ -174,7 +194,7 @@ const ThirdPlant = ({
           </div>
         </>
       )}
-      {isUnlocked === "clear" && (
+      {isUnlocked === "clear" && garden?.avatar?.avatarName && (
         <>
           <div className="w-full h-full flex flex-col relative items-center justify-center">
             <header className="relative flex items-center justify-between w-full text-heading1 text-white p-4">
@@ -201,13 +221,31 @@ const ThirdPlant = ({
               </button>
             </div>
             <Avatar
-              isWater={false}
-              avatarUri={Plant}
+              isWater={isWater}
+              avatarUri={garden?.avatar?.avatarImageUrl || Plant}
               setIsModalOpen={setIsModalOpen}
               isOpen={isOpen}
             />
           </div>
         </>
+      )}
+      {isUnlocked === "clear" && !garden?.avatar?.avatarName && (
+        <div
+          className="flex-col flex items-center justify-center w-full relative "
+          onClick={() => navigate("/registration/avatar")}
+        >
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 h-full">
+            <div
+              className={`balloon balloon-center text-body-sb gap-2 flex flex-col py-3 px-8 items-center justify-center text-center text-black bg-white after:border-l-transparent after:border-b-transparent after:border-r-transparent after:border-t-white
+              `}
+            >
+              새로운 식물을
+              <br /> 심어볼까요?
+              <Plus className="w-8 h-8" />
+            </div>
+          </div>
+          <img src={Null} alt="null" className="w-80 " />
+        </div>
       )}
       {isToastOpen && (
         <Toast
