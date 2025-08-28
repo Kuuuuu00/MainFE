@@ -2,11 +2,12 @@
  * @file AvatarCreationOption.tsx
  * @description 아바타 생성 페이지의 옵션 컴포넌트
  */
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 
 import { useNavigate } from "react-router-dom";
 
 import CreationDefaultImg from "@/assets/images/creationAvatar/CreationDefultImg.png";
+import mockImg from "@/assets/mocks/berry.svg?url";
 import Button from "@/components/common/Button";
 import Pending from "@/components/registration/creationFlow/Pending";
 import { usePostCreationAvatar } from "@/hooks/avatars/usePostCreationAvatarApi";
@@ -19,6 +20,10 @@ const AvatarCreationOption: React.FC = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { mutate: uploadAvatar, isPending } = usePostCreationAvatar();
 
+  /***********************목  *********************************/
+  const [isMockPending, setIsMockPending] = useState(false);
+  /***********************목  *********************************/
+
   const handleContainerClick = () => {
     if (!pickCreation) return;
     actions.setPickAvatar({
@@ -29,10 +34,41 @@ const AvatarCreationOption: React.FC = () => {
     actions.setActiveOption("creation");
   };
 
+  // const handleButtonClick = (e: React.MouseEvent) => {
+  //   e.stopPropagation();
+  //   fileInputRef.current?.click();
+  // };
+
+  /******************************************* 목 데이터 ************************************************/
   const handleButtonClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-    fileInputRef.current?.click();
+
+    setIsMockPending(true);
+
+    setTimeout(() => {
+      actions.setPickCreationAvatar({
+        id: null,
+        description: "생성된 아바타(목)",
+        img: mockImg,
+      });
+
+      actions.setPickAvatar({
+        id: null,
+        description: "생성된 아바타(목)",
+        img: mockImg,
+      });
+
+      actions.setActiveOption("creation");
+
+      setIsMockPending(false); // 로딩 끝
+      navigate("/registration/creation-detail");
+    }, 2500); // ✅ 2.5초 대기
   };
+
+  if (isMockPending) {
+    return <Pending />;
+  }
+  /******************************************* 목 데이터 ************************************************/
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
