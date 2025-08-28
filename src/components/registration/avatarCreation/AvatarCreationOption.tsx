@@ -42,33 +42,8 @@ const AvatarCreationOption: React.FC = () => {
   /******************************************* 목 데이터 ************************************************/
   const handleButtonClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-
-    setIsMockPending(true);
-
-    setTimeout(() => {
-      actions.setPickCreationAvatar({
-        id: null,
-        description: "생성된 아바타(목)",
-        img: mockImg,
-      });
-
-      actions.setPickAvatar({
-        id: null,
-        description: "생성된 아바타(목)",
-        img: mockImg,
-      });
-
-      actions.setActiveOption("creation");
-
-      setIsMockPending(false); // 로딩 끝
-      navigate("/registration/creation-detail");
-    }, 2500); // ✅ 2.5초 대기
+    fileInputRef.current?.click();
   };
-
-  if (isMockPending) {
-    return <Pending />;
-  }
-  /******************************************* 목 데이터 ************************************************/
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -94,6 +69,7 @@ const AvatarCreationOption: React.FC = () => {
       navigate("/registration/creation-detail");
     }, 2500); //
   };
+
   if (isMockPending) {
     return <Pending />;
   }

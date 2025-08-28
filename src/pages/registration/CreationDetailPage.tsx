@@ -10,7 +10,7 @@ import { useAvatarCreationStore } from "@/stores/avatarCreationStore";
 const CreationDetailPage = () => {
   const navigate = useNavigate();
   const { actions } = useAvatarCreationStore();
-  const userName = "000";
+  const userName = "나풀나풀 ";
 
   const handleNextClick = () => {
     actions.completeCreation();
